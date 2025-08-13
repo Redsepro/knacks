@@ -1,8 +1,14 @@
 backend:
-  name: test-repo
+  name: github
+  repo: Redsepro/knacks
+  branch: main
+  base_url: https://github.com
+  auth_type: pkce
+  auth_provider_url: https://github.com
+  client_id: "Ov23liTGNtXWbVK5a14O"
 
-# This part is used for a local development
-local_backend: true
+# This part is used for local development
+# local_backend: true
 
 media_folder: "assets/img" # The folder where assets like images are stored
 public_folder: "/assets/img" # The folder where assets are displayed
