@@ -1,0 +1,12 @@
+services:
+  jekyll:
+    image: jekyll-knacks
+    build: .
+    volumes:
+      - .:/srv/jekyll
+    ports:
+      - "4000:4000"
+    user: 1000:1000
+    environment:
+      BUNDLE_PATH: /srv/jekyll/vendor/bundle
+    command: bundle exec jekyll serve --host 0.0.0.0
