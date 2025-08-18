@@ -361,10 +361,11 @@ async function loadKnackContent(knackFile, knackTitle) {
     contentPanel.scrollTop = 0;
 
     // Change URL to reflect loaded knack
+    knackTitle = sanitizeUrl(knackTitle)
     window.history.pushState(
-      { knackId: knackTitle + '.html' },
+      { knackId: knackTitle },
       '',
-      knackTitle + '.html'
+      knackTitle
     );
 
   } catch (error) {
@@ -546,6 +547,22 @@ function setupCheckboxes() {
       checkbox.classList.toggle('is-checked');
     });
   });
+}
+
+/**
+ * Sanitizes a URL by removing unwanted characters and ensuring it ends with .html.
+ * @param {string} url - The URL to sanitize.
+ * @returns {string} - Sanitized URL.
+ */ 
+function sanitizeUrl(url) {
+  let sanitized = url.toLowerCase()
+                  .replace(/ /g, '-')
+                  .replace(/:/g, '')
+                  .replace(/\./g, '');
+  if (!sanitized.endsWith('.html')) {
+    sanitized += '.html';
+  }
+  return sanitized;
 }
 
 /**
