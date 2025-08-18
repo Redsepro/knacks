@@ -360,6 +360,13 @@ async function loadKnackContent(knackFile, knackTitle) {
     // Scroll to top of content panel
     contentPanel.scrollTop = 0;
 
+    // Change URL to reflect loaded knack
+    window.history.pushState(
+      { knackId: knackTitle + '.html' },
+      '',
+      knackTitle + '.html'
+    );
+
   } catch (error) {
     console.error('Error loading knack content:', error);
     contentPanel.innerHTML = '<p class="title">Error al cargar el contenido. Por favor, intente de nuevo.</p>';
