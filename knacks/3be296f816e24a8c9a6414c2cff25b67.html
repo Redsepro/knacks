@@ -1,0 +1,64 @@
+<h1>🏁 Objetivos</h1>
+
+<p>El contenido de carpetas con imágenes se muestra como miniatura y cuando la vista previa de miniaturas se desactiva, se muestran íconos. Windows solo permite habilitar/deshabilitar las vistas previas de miniatura de ficheros y carpetas en el Explorador usando la función <code>Mostrar siempre íconos, nunca vista en miniatura</code> en el diálogo <code>Opciones de carpeta</code>. No existe una opción para habilitar/deshabilitar la vista previa de miniatura selectivamente solo para carpetas o para ficheros.</p>
+
+<p>Este truco permite habilitar o deshabilitar la miniatura de carpetas, especialmente útil cuando necesite cambiar los íconos de la carpeta.</p>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Desactivar miniaturas de carpetas</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Descargar el fichero o crear un fichero de texto con la extensión .reg y este contenido:</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+; Disable folder thumbnails without disabling thumbnail view for files
+; Created by Ramesh Srinivasan (10/0672019) for Winhelponline.com
+; Note: This fix does NOT reset your saved folder view settings.
+[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
+"Logo"="d:\\unexistingfile.jpg"
+</code></pre></div>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/disable_folder_thumbs.reg'>disable_folder_thumbs.reg</a></p>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En el Explorador de archivos, hacer doble clic en el archivo .reg para insertar la configuración al registro.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Confirmar para aplicar la configuración.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Limpiar la caché de miniaturas para actualizar las vistas previas de las carpetas. Seguir uno de los métodos descritos en el artículo <a target='_blank' rel='noopener noreferrer' href='https://www.winhelponline.com/blog/clear-thumbnail-cache-windows/'>Cómo borrar y reconstruir el caché en miniatura en Windows</a>.</span></li>
+
+</ul>
+
+<h2>Activar miniaturas de carpetas</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Descargar el fichero o crear un fichero de texto con la extensión .reg y este contenido:</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+; Enable folder thumbnails.
+[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
+"Logo"=-
+</code></pre></div>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/enable_folder_thumbs.reg'>enable_folder_thumbs.reg</a></p>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En el Explorador de archivos, hacer doble clic o ejecutar con permisos de administrador el fichero <code>.reg</code> para insertar la configuración al Registro.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Confirmar para aplicar la configuración.</span></li>
+
+</ul>
+
+<h1>🎞️ Videos</h1>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.winhelponline.com/blog/disable-folder-thumbnails-without-disabling-thumbnail-preview-for-files/'>Disable Folder Thumbnails without Disabling Thumbnail Preview for Files</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.deviantart.com/niivu/art/Windows-11-Icon-Themes-874289797'>Windows 11 Icon Themes by niivu on DeviantArt</a></p>
+

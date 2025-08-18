@@ -1,0 +1,110 @@
+<h1>🏁 <b>Objetivos</b></h1>
+
+<p>Antes de realizar cambios significativos y potencialmente riesgosos en un servidor (como la configuración de firewalls a nivel de sistema operativo o la manipulación de servicios críticos), es una práctica indispensable de seguridad y recuperación de desastres crear una copia de seguridad. En <i>Oracle Cloud</i>, esto se logra mediante la creación de respaldos (backups) de los volúmenes de inicio de las instancias.</p>
+
+<p>El objetivo de esta guía es proporcionar los pasos para crear un respaldo de un volumen de inicio (disco primario) en <i>Oracle Cloud</i> y, en caso de un error crítico, cómo restaurar la instancia a ese punto de guardado. Esto proporciona una medida de seguridad que permite revertir rápidamente cualquier cambio no deseado o error de configuración, minimizando el tiempo de inactividad y la pérdida de datos.</p>
+
+<h1>⚠️ <b>Consideraciones importantes</b></h1>
+
+<ul>
+  <li><b>La instancia debe estar DETENIDA para crear un backup.</b> Esto asegura que todos los datos estén en un estado estable y no haya archivos abiertos o en proceso de escritura, lo que podría llevar a una copia de seguridad corrupta.</li>
+
+  <li>Los respaldos pueden tener un costo asociado si se los mantienen por mucho tiempo, ya que consumen espacio de almacenamiento (al menos 4GB).</li>
+
+</ul>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Detener la instancia</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Iniciar sesión en la Consola de <i>Oracle Cloud</i>. <b>Ver:</b> <a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/Iniciar-sesi-n-en-Oracle-Cloud-22030aada13080d5a89aff20af2273db?pvs=21'>Iniciar sesión en <i>Oracle Cloud</i></a></span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en el menú principal (<code>☰</code>) y seleccionar <code>Recursos informáticos</code> > <code>Instancias</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Localizar la instancia a respaldar y hacer clic en su botón de acciones a la derecha (<code>...</code>).</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Parar</code>. Confirmar la acción haciendo clic en <code>Parar instancia</code> y esperar a que el estado de la instancia cambie a <code>Parado</code>.</span></li>
+
+</ul>
+
+<h2>Crear un backup del volumen de inicio</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en el botón de acciones (<code>...</code>) de la instancia detenida y seleccionar <code>Ver detalles</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la página de detalles de la instancia detenida, hacer clic en la pestaña <code>Almacenamiento</code> en el menú superior.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la sección <code>Volúmenes de inicio</code>, hacer clic en el nombre del volumen de inicio o en el menú de acciones (<code>...</code>) y seleccionar <code>Ver detalles de volumen de inicio</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la página de detalles del <b>Boot Volume</b> (Volumen de inicio), en el menú <code>Recursos</code> de la izquierda, hacer clic en <code>Copias de seguridad de volumen de inicio</code> (Boot Volume Backups).</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en el botón <code>Crear copia de seguridad del volumen de inicio</code>(Create Boot Volume Backup). Asignar un nombre al respaldo y seleccionar el tipo de respaldo: <code>Full backup</code> (Respaldo completo) o <code>Incremental backup</code> (Respaldo incremental).</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Create Boot Volurne Backup</code> (Crear respaldo del volumen de inicio) y esperar se completa la solicitud. Este proceso puede tardar unos minutos.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Cuando el estado del respaldo cambie a <code>Available</code> (Disponible) el proceso se ha completado.</span></li>
+
+</ul>
+
+<h2><b>Iniciar la instancia nuevamente</b></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Una vez que el backup se haya completado exitosamente, regresar a la página de detalles de la instancia.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en el botón de acciones a la derecha (<code>...</code>) y seleccionar <code>Iniciar</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Esperar a que el estado de la instancia cambie a <code>En ejecución</code>.</span></li>
+
+</ul>
+
+<h2>Restaurar un backup</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en el menú principal (<code>☰</code>) y seleccionar <code>Recursos informáticos</code> > <code>Instancias</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Localizar la instancia a respaldar y hacer clic en su botón de acciones a la derecha (<code>...</code>).</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Parar</code>. Confirmar la acción haciendo clic en <code>Parar instancia</code> y esperar a que el estado de la instancia cambie a <code>Parado</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en el botón de acciones (<code>...</code>) de la instancia detenida y seleccionar <code>Ver detalles</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la página de detalles de la instancia detenida, hacer clic en la pestaña <code>Almacenamiento</code> en el menú superior.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la sección <code>Volúmenes de inicio</code>, hacer clic en el nombre del volumen de inicio o en el menú de acciones (<code>...</code>) y seleccionar <code>Ver detalles de volumen de inicio</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la página de detalles del <b>Boot Volume</b> (Volumen de inicio), en la sección <code>Copias de seguridad de volumen de inicio</code> hacer clic en el backup que se desea restaurar.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la página de detalles del respaldo seleccionado, hacer clic en botón <code>Restore Boot Volume</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Asignar un nombre al proceso de restauración, no modificar las otras opciones y hacer clic en el botón <code>Restore Boot Volume</code> para iniciar el proceso de restauración. Este proceso puede tardar unos minutos.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Una vez que la restauración se haya completado exitosamente, regresar a la página de detalles de la instancia.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en el botón de acciones a la derecha (<code>...</code>) y seleccionar <code>Iniciar</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Esperar a que el estado de la instancia cambie a <code>En ejecución</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span><b>Verificar el Acceso.</b> Intentar conectarse al servidor vía SSH para confirmar que la restauración fue exitosa y que el servidor está nuevamente accesible y funcional.</span></li>
+
+</ul>
+
+<h1>➡️ Ver también</h1>
+
+<div class='featured'>
+<span class='feat-icon'>&#x2139&#xFE0F</span>
+<span class='feat-text'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/21e30aada1308069b44afd3edd4aed73?pvs=21'>VPS desde cero + EasyPanel + n8n + EvolutionAPI</a>
+</span></div>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=_r3j4hK6XSw'>https://www.youtube.com/watch?v=_r3j4hK6XSw</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=1Xx7_qSO91M'>https://www.youtube.com/watch?v=1Xx7_qSO91M</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://docs.oracle.com/es-ww/iaas/compute-cloud-at-customer/topics/compute/backing-up-and-restoring-an-insance.htm'>Copia de seguridad y restauración de una instancia</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://docs.oracle.com/es-ww/iaas/compute-cloud-at-customer/topics/compute/creating-an-instance-backup.htm'>Creación de una Copia de Seguridad de Instancia</a></p>
+

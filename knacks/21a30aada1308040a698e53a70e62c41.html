@@ -1,0 +1,163 @@
+<h1>🏁 Objetivos</h1>
+
+<p><i>PuTTY</i> es una implementación gratuita de SSH y <i>Telnet</i> para <i>Microsoft Windows</i>. El programa incluye un emulador de terminal <i>xterm</i>. <b><i>PuTTY</i></b> genera sus propias claves SSH públicas y privadas con <i>PuTTYgen</i>, pero puede interoperar con claves <i>OpenSSH</i>.</p>
+
+<p>Y aunque <i>OpenSSH</i> está incluido desde Windows 10 y Windows Server 2019 para conectarse en una terminal al servidor mediante usuario y contraseña:</p>
+
+<ul>
+  <li>Comando SSH: <code>ssh -i ruta/a/clave_privada.key <usuario>@<ip_pública_del_servidor></code>.</li>
+
+  <li>Introducir nombre de usuario (Predeterminado para instancias con <i>Ubuntu</i> en <i>Oracle Cloud<b></i>:</b> <code>ubuntu</code>).</li>
+
+  <li>Introducir contraseña.</li>
+
+</ul>
+
+<p>Por los riesgos de seguridad se recomienda más bien conectarse usando la clave privada del servidor. <i>PuTTY</i> <b><i><i>es una herramienta útil para estas tareas de conexiones SSH con sistemas </i>UNIX<i>. Se necesitan dos programas: </i>PuTTY<i> </i></b></i>y <i>PuTTYgen</i>, ya que los ficheros de clave privada SSH generados por <i>Oracle Cloud Infrastructure</i> no son compatibles con <i>PuTTY<b></i>.</b></p>
+
+<p>Si desea usar un fichero de clave privada generado durante el proceso de creación de instancias, debe primero convertirlo con <i>PuTTYgen</i> <b><i><i>a un fichero <code>.ppk</code> antes de poder usarlo con </i>PuTTY<i> </i></b></i>para conectarse al servidor.</p>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>En este contenido, todas las referencias a <b>IP pública</b>, <b>IP privada</b>, <b>IP efímera</b>, <b>IP reservada</b>, <b>IP primaria</b>, <b>IP secundaria</b> o <b>dirección IP</b> se refieren a direcciones <b>IPv4</b>, a menos que se indique lo contrario.
+</span></div>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Instalar <i>PuTTY</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ingresar a la página oficial <a target='_blank' rel='noopener noreferrer' href='http://www.putty.org/'>http://www.putty.org</a> y hacer clic en <code>Download PuTTY</code> para descargar el instalador de la última versión.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Ejecutar el instalador.</span></li>
+
+</ul>
+
+<h2>Convertir el fichero de clave privada con <i>PuTTYgen</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Abrir <i>PuTTY Key Generator</i>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Presionar <code>Load</code> y seleccionar la <b>clave privada</b> generada al crear la instancia. La extensión del fichero clave es <code>.key</code>. Si no hubo errores, aparecerá un mensaje de importación exitosa.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/6JXT2kks/image.png' alt='image'>
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/sJ1nK3VT/image-1.png' alt='image 1'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Modificar el comentario de la clave importada si desea, agregar una contraseña de acceso y guardar haciendo clic en <code>Save private key</code>. para crear un nuevo fichero con extensión <code>.ppk</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/bxstmDz/image-2.png' alt='image 2'>
+<h2>Conectarse a un servidor <i>Linux</i> usando <i>PuTTY</i> y un fichero de clave privada .ppk</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Abrir <i>PuTTY</i>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En el panel <code>Category</code>, seleccionar <code>Session</code> y rellenar los campos: <code>Host Name (or IP address)</code>, <code>Port</code> y <code>Connection type</code>:</span></li>
+
+  <li><label class='task-checkbox'></label><span><code>Host Name (or IP address)</code>: <code><username>@<public-ip-address></code>.</span></li>
+
+</ul>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><code><username></code> es el nombre de usuario predeterminado para la instancia. Para imágenes compatibles con <i>Oracle Linux</i> y <i>Redhat Enterprise Linux</i>, el nombre de usuario predeterminado es <code>opc</code>. Para imágenes de <i>Ubuntu</i>, el nombre de usuario predeterminado es <code>ubuntu</code>.
+<code><public-ip-address></code> es la dirección IP pública de la instancia que se puede copiar desde la consola de administración.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><code>Port:</code> <code>22</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span><code>Connection type:</code> <code>SSH</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Z6MgP4DF/image-3.png' alt='image 3'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En el panel <code>Category</code>, expandir <code>Window</code> y seleccionar <code>Translation</code>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En el Menú <code>Remote character set</code>, seleccionar UTF-8.</span></li>
+
+</ul>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>La configuración de localización predeterminada en instancias basadas en Linux es UTF-8 y esto permite a PuTTY usar la misma configuración regional.
+</span></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/fYf3NKkq/image-4.png' alt='image 4'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En el panel <code>Category</code>, expandir <code>Connection</code>, expandir <code>SSH</code>, expandir <code>Auth</code> y hacer clic en <code>Credentials</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En el campo <code>Private key file for authentication:</code>, hacer clic en el botón <code>Browse…</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Seleccionar el fichero <code>.ppk</code> creado anteriormente.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/LzrfVwSQ/image-5.png' alt='image 5'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Opcional:</b> En el panel <code>Category</code>, regresar a <code>Session</code> y guardar la configuración escribiendo un nombre para la sesión en el campo <code>Saved Sessions</code> y haciendo clic en <code>Save</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/chf3ZyRB/image-6.png' alt='image 6'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en el botón <code>Open</code> e introducir la contraseña de la clave para ingresar.</span></li>
+
+</ul>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>En la primera conexión a la instancia, se puede recibir un mensaje de que la clave de host del servidor no se ha almacenado en el registro. Hacer clic en <code>Yes</code> para continuar la conexión.
+</span></div>
+
+<h1>📒 Notas</h1>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Si la conexión falla y no está detrás de un proxy, asegurar que <b>Proxy type</b> en la configuración de <i>PuTTY</i> esté configurada en <code>None</code>. Si está detrás de un proxy, seleccionar el tipo de proxy e ingresar el nombre de host del proxy y el número de puerto.
+</span></div>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Si cambió los permisos del fichero en la clave para conectarse desde un sistema de Windows usando <i>OpenSSH</i>, entonces la clave no funcionará con una conexión de <i>PuTTY</i>. <a target='_blank' rel='noopener noreferrer' href='https://docs.oracle.com/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm#linux-from-windows-openssh'>Use OpenSSH para conectarse</a>.
+</span></div>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Para más sugerencias de solución de problemas con SSH, ver <a target='_blank' rel='noopener noreferrer' href='https://docs.oracle.com/es-ww/iaas/Content/Compute/Tasks/troubleshooting-ssh-connection.htm#troubleshooting-ssh-connection'>Solución de problemas de la conexión SSH</a>.
+</span></div>
+
+<h1>➡️ Ver también</h1>
+
+<div class='featured'>
+<span class='feat-icon'>&#x2139&#xFE0F</span>
+<span class='feat-text'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/22130aada13080e083cee097b4b16f8d?pvs=21'>VPS desde cero + EasyPanel + n8n + EvolutionAPI</a>
+</span></div>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=eKZrhyntZ-I'>https://www.youtube.com/watch?v=eKZrhyntZ-I</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=KUx38f9sn_o'>https://www.youtube.com/watch?v=KUx38f9sn_o</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://docs.oracle.com/es-ww/iaas/Content/Compute/Tasks/connect-to-linux-instance-from-windows-putty.htm'>Conexión a una instancia de Linux mediante PuTTY y Windows</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://blog.ronin.cloud/connect-to-linux-putty/'>Connecting to a Linux (Ubuntu) Machine with PuTTY</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://roberto-di-bella.medium.com/create-an-oci-compute-instance-and-connect-to-it-via-ssh-using-putty-1a445109045b'>Create an OCI Compute Instance and connect to it via SSH using PuTTY</a></p>
+

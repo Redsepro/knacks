@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang='es'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Knacks</title>
+    <style>
+      /* Fixed styles for 2 columns layout */
+      body {
+        display: grid;
+        grid-template-columns: var(--toc-width, 250px) 1fr;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        border: 0.5px dotted #32302c;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+
+      aside#toc-panel {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        position: relative;
+      }
+      div#content-panel {
+        overflow-y: auto;
+      }
+      .style-selector {
+        margin-top: auto;
+      }
+
+      /* Scrollbars styles */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #c4c4c4;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+      }
+      
+      /* Code blocks */
+      .boxCode {
+        position: relative;
+        padding: 10px;
+        padding-top: 30px;
+        margin-top: 100px;
+        margin: 0px;
+      }
+      pre {
+        /* margin: 0 0 10px 0; */
+        overflow: auto;
+      }
+      .boxCode > button {
+        position: absolute;
+        font-family: Segoe UI;
+        font-size: 0.7em;
+        top: 10px;
+        right: 10px;
+        padding: 0 10px;
+        margin: 0;
+        color: black;
+        background-color: #f7f6f3;
+        border: 1px dotted #b7b7b4;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .boxCode > button:hover {
+        background-color: #ebeae7;
+      }
+
+      /* Featured blocks */
+      .featured {
+        display: flex;
+        align-items: top;
+        gap: 10px;
+        background-color: #f0f8ff;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+      .feat-icon {
+        font-size: 1em;
+      }
+      .feat-text {
+        flex-grow: 1;
+      }
+
+      /* Task lists */
+      .task-list {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .task-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        /* margin-bottom: 5px; */
+        padding: 0;
+      }
+      .task-checkbox {
+        font-size: 14px;
+        position: relative;
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        margin-top: 0.5vh;
+        background-color: #fff;
+        border: 1.7px solid #8c8b8a;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .task-checkbox:hover {
+        background-color: #f3f3f3;
+        border: 1.7px solid #595857;
+      }
+      .task-checkbox::after {
+        position: absolute;
+        content: '✓';
+        left: 2px;
+        top: -3px;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .task-checkbox.is-checked {
+        background-color: #2383e2;
+        border-color: #2383e2;
+      }
+      .task-checkbox.is-checked::after {
+        opacity: 1;
+      }
+      .task-checkbox.is-checked + span {
+        text-decoration: line-through;
+        color: #888;
+      }
+
+      /* Search UI inside toc panel */
+      #search-box {
+        display: flex;
+        flex-direction: column;
+      }
+      #global-search-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      #global-search {
+        flex: 1;
+        padding: 8px 10px;
+        font-size: 0.95rem;
+        border: 1px solid rgba(0,0,0,0.12);
+        border-radius: 6px;
+        outline: none;
+      }
+      #global-search:focus {
+        box-shadow: 0 0 0 3px rgba(0,123,255,0.08);
+      }
+      #search-results {
+        margin-top: 8px;
+        max-height: 200px;
+        overflow: auto;
+        font-size: 0.8rem;
+      }
+      .btn-search:before {
+        content: '🔍';
+        /* position: absolute; */
+        left: 6px;
+        top: 50%;
+        width: 30px;
+        transform: translateY(-50%);
+        /* font-size: 1.2em; */
+        flex-shrink: 0;
+      }
+      .search-item {
+        padding: 8px 6px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .search-item:hover {
+        background-color: rgba(0,0,0,0.04);
+      }
+      .search-sep {
+        margin: 10px 0;
+        border: none;
+        border-top: 1px solid rgba(0,0,0,0.08);
+      }
+    </style>
+    <link rel='stylesheet' href='css/markdown.css' id='theme-style'>
+  </head>
+  <body>
+    <aside id='toc-panel'>
+      <div id='search-box' aria-label='Búsqueda global'>
+        <div id='global-search-row'>
+          <input id='global-search' type='search' placeholder='Buscar...' aria-label='Buscar'>
+          <button id='btn-search' class='btn-search' aria-label='Buscar'> </button>
+        </div>
+        <hr class='search-sep'>
+        <div id='search-results' role='list' aria-label='Resultados de búsqueda'></div>
+      </div>
+      <select id='knacks-list'>
+      </select>
+      <div id='resizer'></div>
+      <nav id='toc'></nav>
+      <div class='style-selector'>
+        <label for='style-switcher'>Estilo:</label>
+        <select id='style-switcher'>
+          <option value='adobe.css'>Adobe</option>
+          <option value='android.css'>Android</option>
+          <option value='apple.css'>Apple</option>
+          <option value='bootstrap.css'>Bootstrap</option>
+          <option value='chm.css'>CHM</option>
+          <option value='doxygen.css'>Doxygen</option>
+          <option value='hlp.css'>HLP</option>
+          <option value='markdown.css'>Markdown</option>
+          <option value='material.css'>Material Design</option>
+          <option value='metro.css'>Metro</option>
+          <option value='modern.css'>Moderno</option>
+          <option value='readthedocs.css'>Read the Docs</option>
+          <option value='terminal.css'>Terminal</option>
+          <option value='ubuntu.css'>Ubuntu</option>
+          <option value='wiki.css'>Wiki</option>
+        </select>
+      </div>
+    </aside>
+    <div id='content-panel'>
+    </div>
+    <script src='js/scripts.js'></script>
+  </body>
+</html>

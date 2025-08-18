@@ -1,0 +1,221 @@
+/*
+* KNACK STYLE: Terminal
+*/
+
+/* --- LAYOUT AND BACKGROUND COLORS --- */
+body {
+  background-color: #000;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+  line-height: 1.4;
+}
+
+aside#toc-panel {
+  background-color: #000;
+  padding: 20px 10px;
+}
+
+div#content-panel {
+  background-color: #000;
+  padding: 20px 40px;
+}
+
+/* --- RESIZER STYLES --- */
+div#resizer {
+  background-color: #0f0;
+  width: 5px;
+  cursor: ew-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* --- TOC STYLES --- */
+#toc {
+  margin-right: 5px;
+}
+
+#toc ul, #toc ul ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+#toc ul li {
+  font-size: 0.9em;
+  margin-bottom: 0.3em;
+}
+
+#toc a {
+  color: #0f0;
+  text-decoration: none;
+}
+
+#toc a:hover {
+  text-decoration: underline;
+}
+
+/* --- CONTENT STYLES --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Courier New', monospace;
+  color: #0f0;
+  font-weight: normal;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+p.title {
+  font-family: 'Courier New', monospace;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #0f0;
+  border-bottom: 2px solid #0f0;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 1.8em;
+  border-bottom: 1px solid #0f0;
+  padding-bottom: 0.2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: #00f;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul, ol {
+  padding-left: 20px;
+}
+
+blockquote {
+  border-left: 2px solid #0f0;
+  color: #0f0;
+  padding-left: 10px;
+  margin: 1em 0;
+}
+
+.boxCode, code {
+  font-family: 'Courier New', monospace;
+  background-color: #000;
+  color: #0f0;
+  padding: 0.2em 0.4em;
+}
+
+.boxCode {
+  border: 1px dotted #00aa00;
+  padding: 8px;
+}
+
+/* Terminal: featured, task-list and boxCode button */
+.boxCode > button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  background: #0f0;
+  color: #000;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.boxCode > button:hover {
+  background: #0b0;
+}
+
+pre {
+  overflow: auto;
+}
+
+.featured {
+  background: #001400;
+  border: 1px solid #003200;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  color: #0f0;
+  display: flex;
+  gap: 8px;
+}
+
+.feat-icon {
+  color: #0f0;
+}
+
+.feat-text {
+  flex: 1;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1.6px solid #0f0;
+  background: #000;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.task-checkbox.is-checked {
+  background: #0f0;
+  border-color: #0f0;
+}
+
+.task-checkbox::after {
+  content: '✓';
+  color: #000;
+  display: block;
+  text-align: center;
+  line-height: 14px;
+  opacity: 0;
+}
+
+.task-checkbox.is-checked::after {
+  opacity: 1;
+}
+
+.btn-search {
+  background: #0f0;
+  color: #000;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.btn-search:hover {
+  background: #0b0;
+}
+
+#global-search {
+  width: 100%;
+  padding: 7px 9px;
+  font-size: 0.95rem;
+  border: 1px solid #222;
+  border-radius: 3px;
+  background: #0b0b0b;
+  color: #e6ffe6;
+}

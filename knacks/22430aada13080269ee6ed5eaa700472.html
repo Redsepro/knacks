@@ -1,0 +1,316 @@
+<h1>🏁 <b>Objetivos</b></h1>
+
+<p>Los <b>rootkits</b> son programas maliciosos que permiten a un atacante mantener el acceso no autorizado a un sistema informático, ocultando su presencia y sus actividades. Detectarlos es crucial para la seguridad del servidor, ya que comprometen la integridad y confidencialidad de la información. Este <i>Knack</i> tiene como objetivo guiar en la instalación y el uso de <i>chkrootkit</i> y <i>rkhunter</i>, dos herramientas populares en sistemas <i>Ubuntu</i> para escanear el sistema en busca de signos de amenazas y vulnerabilidades como <b>rootkits</b> conocidos, backdoors y exploits. Integrar estas herramientas en la rutina de seguridad del servidor ayuda a identificar y mitigar posibles compromisos, proporcionando una capa adicional de defensa contra amenazas avanzadas.</p>
+
+<h1>👨🏽‍🏫 <b>Instrucciones</b></h1>
+
+<h2>Actualizar el sistema operativo</h2>
+
+<h2>Actualizar el servidor</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Conectarse de manera remota al servidor mediante un terminal. Ver: <a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/Windows-Conectarse-a-instancias-Linux-con-PuTTY-21a30aada1308040a698e53a70e62c41?pvs=21'>Windows: <b>Conectarse a instancias Linux con PuTTY</b></a>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt update && sudo apt upgrade -y
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que el servidor se reinicie por completo y pueda conectarse de nuevo.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo reboot
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/1GbWwtpF/image.png' alt='image'>
+<h2>Instalar y ejecutar chkrootkit</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Instalar el paquete <i>chkrootkit</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt install -y chkrootkit
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/TDVMWRT4/image-1.png' alt='image 1'>
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>Durante el proceso de instalación, se instala <i>Postfix</i> como dependencia que pedirá elegir una opción para configurar el envío de mensajes de correo. Si ya dispone de un <b>Mail Transfer Agent</b> (<b>MTA</b>) configurado, elegir la opción que desee usar para el envío de mensajes. Si no tiene un <b>MTA</b>, seleccione la primera opción: <code>No configuration</code>, <code>Tab</code> para saltar al botón <code>Ok</code> y <code>Enter</code>.
+</span></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/j9M8wV3L/image-2.png' alt='image 2'>
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/4n4qFqK2/image-3.png' alt='image 3'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ejecutar <i>chkrootkit</i> para escanear el sistema en busca de <b>rootkits</b>. El escaneo puede tomar varios minutos.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo chkrootkit
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Z6ZCntGD/image-4.png' alt='image 4'>
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/b5Pdm8Jd/image-5.png' alt='image 5'>
+<div class='featured'>
+<span class='feat-icon'>✅</span>
+<span class='feat-text'>Una salida que muestre <code>not found</code> o <code>not infected</code> para la mayoría de las verificaciones indica que no se encontraron anomalías conocidas.
+</span></div>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Los mensajes <code>WARNING</code> se pueden descartar verificando que sean <b>falsos positivos</b>. Es común ver advertencias o mensajes no críticos, especialmente para:
+<ul>
+  <li>Los relacionados con herramientas como <i>ifconfig</i>, <i>ssh</i> o <i>sshd</i> si son versiones confiables.</li>
+
+</ul>
+
+<ul>
+  <li><b>Sockets de sniffer</b> de paquetes abiertos o <b>interfaces de red</b> en modo <b>promiscuo</b>. Un ejemplo es <i>systemd-networkd</i>, que es un <b>demonio del sistema</b> en <i>Linux</i> que gestiona y configura las interfaces de red. Se puede confirmar es un falso positivo de la siguiente forma:</li>
+
+</ul>
+
+<ol>
+  <li>Verificar que el proceso pertenece al servicio señalado.</li>
+
+</ol>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>ps -fp 85739
+</code></pre></div>
+
+<ol>
+  <li>Debe coincidir con un comando propio del sistema, con proceso padre (<code>PPID</code>) bajo y terminal (<code>TTY</code>) asociada a procesos de sistema: <code>?</code>.</li>
+
+</ol>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/TdzD29T/image-6.png' alt='image 6.png'>
+<ul>
+  <li><b>Dotfiles</b> (ficheros ocultos) de paquetes oficiales. Ejemplos pueden ser <i>Fail2Ban</i> o <i>Twisted</i> (un conocido <b>framework</b> de red). Se puede confirmar son un falso positivo comparándolos con el paquete original, por ejemplo para <i>Twisted</i>:</li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>dpkg -S /usr/lib/python3/dist-packages/twisted/trial/newsfragments/.gitignore
+</code></pre></div>
+
+<ol>
+  <li>Identificado el nombre (ej. <i>python3-twisted</i>), verificar con <i>debsums</i> la integridad del paquete.</li>
+
+</ol>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo debsums python3-twisted
+</code></pre></div>
+
+<ol>
+  <li>El paquete está íntegro si la salida solo muestra archivos no coincidentes (modificados) por cambios esperados (ej. archivos de configuración editados tras su instalación). Si algún <b>dotfile</b> (ej. <code>.gitignore</code>) u otros archivos son listados como modificados sin una razón legítima, entonces existe una posibilidad de infección.</li>
+
+</ol>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/q3dNYv3V/image-7.png' alt='image 7.png'>
+</span></div>
+
+<div class='featured'>
+<span class='feat-icon'>☠️</span>
+<span class='feat-text'>Cualquier salida inusual o <code>INFECTED</code> requiere investigaciones más profundas.
+</span></div>
+
+<h2>Instalar y configurar <i>rkhunter</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Instalar el paquete <i>rkhunter</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt install -y rkhunter
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/xK9qFkNM/image-8.png' alt='image 8'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Abrir el fichero de configuración de <i>rkhunter</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo nano /etc/rkhunter.conf
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Buscar la línea <code>ROTATE_MIRRORS=</code>, descomentarla si es necesario y establecer su valor a <code>1</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>ROTATE_MIRRORS=1
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Buscar la línea <code>UPDATE_MIRRORS=</code>, descomentarla si es necesario  y establecer su valor a <code>1</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>UPDATE_MIRRORS=1
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Buscar la línea <code>MIRRORS_MODE=</code>, descomentarla si es necesario  y establecer su valor a <code>0</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>MIRRORS_MODE=0
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/279XgR7c/image-9.png' alt='image 9'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Buscar la línea <code>WEB_CMD=</code>, descomentarla si es necesario y si su valor es <code>WEB_CMD="/bin/false"</code>, modificarlo por <code>WEB_CMD=wget</code> (<b>no incluir comillas</b>).</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>WEB_CMD=wget
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/p6drppfM/image-10.png' alt='image 10'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Buscar la sección de líneas <code>ALLOWHIDDENFILE=</code> y agregar los siguientes parámetros para excluir alertas de <b>falsos positivos</b>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'># Whitelist legitimate hidden files in /etc
+ALLOWHIDDENFILE=/etc/.resolv.conf.systemd-resolved.bak
+ALLOWHIDDENFILE=/etc/.updated
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/1tgFYy4Y/image-11.png' alt='image 11'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Guardar los cambios presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</span></li>
+
+</ul>
+
+<h2>Actualizar <i>rkhunter</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Actualizar la base de datos de <i>rkhunter</i> con las últimas definiciones de amenazas. Es fundamental ejecutar este comando después de la instalación y <b>periódicamente antes</b> de cada escaneo.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo rkhunter --update
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ejecutar una verificación de la integridad de los archivos. Esto crea una base de datos de los hashes de archivos del sistema, que <i>rkhunter</i> utilizará en escaneos futuros para detectar modificaciones.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo rkhunter --propupd
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/665b9CB/image-12.png' alt='image 12'>
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><b>IMPORTANTE:</b> Es crucial ejecutar <code>--propupd</code> <b>inmediatamente después</b> de la instalación inicial y cada vez que se realicen actualizaciones significativas del sistema o de paquetes importantes, ya que de lo contrario <i>rkhunter</i> reportará cambios legítimos como posibles advertencias (<b>falsos positivos</b>).
+</span></div>
+
+<h2>Ejecutar <i>rkhunter</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ejecutar <i>rkhunter</i> para escanear el sistema en busca de <b>rootkits</b>, puertas traseras y vulnerabilidades. Este escaneo puede tomar varios minutos, donde <i>rkhunter</i> hará una pausa para que se pueda revisar la salida de cada fase del escaneo y pedirá confirmación después de cada sección.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo rkhunter -c
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Presionar <code>Enter</code> para continuar el escaneo en cada pausa.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/BH9fcPCK/image-13.png' alt='image 13'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Al finalizar el escaneo, <i>rkhunter</i> generará un resumen. Buscar el bloque <code>System checks summary</code> y, si no hay signos de infección, deben reportarse cero hallazgos y aparecer los mensajes <code>No warnings were found while checking the system</code>, <code>No rootkits found</code> o <code>No security issues</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/j9732psG/image-14.png' alt='image 14'>
+<h2>Automatizar escaneos de <i>rkhunter</i> con <b>cron</b></h2>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>Se recomienda habilitar el escaneo diario del servidor, activar la actualización semanal de las bases de datos y actualizar automáticamente sus propiedades de archivos (<code>--propupd</code>) después de una actualización. Los resultados se registrarán en <code>/var/log/rkhunter/rkhunter.log</code>. También puede configurarse para enviar correos electrónicos si se tiene un <b>MTA</b> configurado.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Abrir el fichero de configuración de <code>cron</code> para <i>rkhunter</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo nano /etc/default/rkhunter
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Buscar las siguientes líneas y establecer sus valores a <code>true</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>CRON_DAILY_RUN="true"
+CRON_DB_UPDATE="true"
+APT_AUTOGEN="true"
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/xK6j5RZ7/image-15.png' alt='image 15'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Guardar los cambios presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</span></li>
+
+</ul>
+
+<h2>Revisar logs y reportes de <i>chkrootkit</i> y <i>rkhunter</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Se pueden revisar los logs de <i>chkrootkit</i> para ver el historial de escaneos manuales diarios. Presionar <code>q</code> para salir del visor <code>less</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo less /var/log/chkrootkit/chkrootkit-daily.log
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Se pueden revisar los logs de <i>rkhunter</i> para ver los resultados de los escaneos (manuales y automáticos). Presionar <code>q</code> para salir del visor <code>less</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo less /var/log/rkhunter.log
+</code></pre></div>
+
+<h1>📒 Notas</h1>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Es vital investigar cualquier advertencia o anomalía reportada por <i>chkrootkit</i> o <i>rkhunter</i>. No todas las advertencias indican una infección, pero muchas pueden señalar configuraciones incorrectas o riesgos potenciales.
+</span></div>
+
+<div class='featured'>
+<span class='feat-icon'>🔒</span>
+<span class='feat-text'>Para una seguridad aún mayor, considere integrar estas herramientas con un sistema de monitoreo centralizado o un <b>SIEM (Security Information and Event Management)</b> para la gestión de logs y alertas.
+</span></div>
+
+<h1>➡️ Ver también</h1>
+
+<div class='featured'>
+<span class='feat-icon'>&#x2139&#xFE0F</span>
+<span class='feat-text'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/22130aada13080e083cee097b4b16f8d?pvs=21'>VPS desde cero + EasyPanel + n8n + EvolutionAPI</a>
+</span></div>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=nZQ0DguvRWI'>https://www.youtube.com/watch?v=nZQ0DguvRWI</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=uggOVk3SDdo'>https://www.youtube.com/watch?v=uggOVk3SDdo</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.linuxtotal.com.mx/index.php?cont=info_seyre_011'>Checadores de rootkits en Linux - rkhunter y chkrootkit</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://terranode.net/blog/detecta-rootkits-con-rkhunter-y-chkrootkit'>Detecta rootkits con RKHunter y Chkrootkit fácilmente - Terranode</a></p>
+

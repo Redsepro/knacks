@@ -1,0 +1,265 @@
+<h1>🏁 <b>Objetivos</b></h1>
+
+<p>Esta guía tiene como objetivo detallar los pasos para instalar <i>Certbot</i> y configurar <b>SSL/TLS (HTTPS)</b> con certificados gratuitos de <i>Let's Encrypt</i> para un servidor <i>Nginx</i> en <i>Ubuntu</i>. Implementar <b>HTTPS</b> es crucial para asegurar las comunicaciones entre el servidor y los clientes, cifrar los datos, proteger la privacidad del usuario y mejorar la confianza en tu sitio web.</p>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Actualizar el servidor</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Conectarse de manera remota al servidor mediante un terminal. Ver: <a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/Windows-Conectarse-a-instancias-Linux-con-PuTTY-21a30aada1308040a698e53a70e62c41?pvs=21'>Windows: <b>Conectarse a instancias Linux con PuTTY</b></a>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt update && sudo apt upgrade -y
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que el servidor se reinicie por completo y pueda conectarse de nuevo.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo reboot
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/1GbWwtpF/image.png' alt='image'>
+<h2>Eliminar <i>Certbot-Auto</i> y cualquier paquete <i>Certbot OS</i> preinstalado</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ejecutar este comando para asegurarse que cuando se ejecute el comando <code>certbot</code> se utilice el <code>snap</code> en lugar de la instalación desde algún <b>Package Manager</b> previo.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt remove certbot --purge && sudo snap remove certbot --purge
+</code></pre></div>
+
+<h2>Instalar <i>Certbot</i> y el plugin de <i>Nginx</i></h2>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><b>NOTA:</b> Para paquetes como <i>Certbot</i>, al igual que muchas herramientas que evolucionan rápidamente o necesitan las últimas características por razones de seguridad, los desarrolladores recomiendan su instalación mediante <code>snap</code> o sus propios <b>PPA</b>.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Instalar <i>Certbot</i> y el plugin específico para <i>Nginx</i> usando <code>snap</code>. Este plugin permitirá a <i>Certbot</i> interactuar directamente con la configuración de <i>Nginx</i> para automatizar la configuración del SSL.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo snap install core && sudo snap refresh core && sudo snap install --classic certbot && sudo ln -s /snap/bin/certbot /usr/bin/certbot
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/CKDJwKPf/image-1.png' alt='image 1'>
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>Si <code>snap</code> no está disponible o presenta problemas, una alternativa es instalarlo vía <code>apt</code>, aunque esta opción suele proveer versiones menos recientes.
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt install -y certbot python3-certbot-nginx
+</code></pre></div>
+
+</span></div>
+
+<h2>Verificar la nueva configuración de <i>Nginx</i></h2>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'><i>Certbot</i> necesita encontrar el bloque <code>server_name</code> en la configuración de <i>Nginx</i> para saber para qué dominio debe emitir el nuevo certificado SSL.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Abrir el fichero de configuración de <i>Nginx</i> del dominio principal creado al instalar <i>Nginx</i>. Ver: <a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/Ubuntu-Instalar-Nginx-pasos-previos-como-proxy-inverso-22230aada1308109b0bacc4c36641076?pvs=21'>Ubuntu: Instalar Nginx, pasos previos como proxy inverso</a>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo nano /etc/nginx/sites-available/domain.conf
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Verificar que la directiva <code>server_name</code> esté correctamente configurada e incluya <b>todos los nombres de dominio y subdominios</b> para los que se desea obtener el certificado SSL (por ejemplo, <code>mi_dominio.com</code> y <code>www.mi_dominio.com</code>). Si solo está definido el dominio principal, agregar el subdominio <code>www.<dominio.com></code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>server {
+listen 80;
+server_name mi_dominio.com www.mi_dominio.com; # Verificar que los dominios a certificar estén aquí
+# ... otras configuraciones
+}
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Guardar los cambios presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/qYh6SyyM/image-2.png' alt='image 2'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Comprobar la sintaxis de la configuración de <i>Nginx</i> para detectar novedades o errores. Debe responder con líneas terminadas en <code>syntax is ok</code> y <code>test is successful</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo nginx -t
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Reiniciar el servicio <i>Nginx</i> para aplicar los cambios de configuración.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo systemctl restart nginx
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/DDYWKN8j/image-3.png' alt='image 3'>
+<h2>Obtener el certificado SSL</h2>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'></span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ejecutar <i>Certbot</i> con el plugin de <i>Nginx</i> para obtener y configurar el certificado.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo certbot --nginx -d mi_dominio.com -d www.mi_dominio.com
+</code></pre></div>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>Reemplazar <code>mi_dominio.com</code> y <code>www.mi_dominio.com</code> con los dominios reales. Si tiene más subdominios para los que quiera SSL en este mismo archivo de <i>Nginx</i>, añadirlos con <code>-d</code>.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Proporcionar una dirección de correo electrónico válida para avisos de renovación y seguridad. Esta dirección se puede modificar después.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Aceptar los Términos de Servicio de <i>Let's Encrypt</i> y recibir información adicional presionando <code>Y</code> y <code>Enter</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/xS7fg6ky/image-4.png' alt='image 4'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Aceptar la opción de redirigir todo el tráfico HTTP a <b>HTTPS</b> <b>(</b>generalmente opción 2 - Redirect<b>)</b> para forzar el uso de conexiones seguras.</span></li>
+
+  <li><label class='task-checkbox'></label><span><i>Certbot</i> automáticamente modificará la configuración de <i>Nginx</i>, añadirá el certificado SSL y configurará la redirección a <b>HTTPS</b>.</span></li>
+
+</ul>
+
+<h2>Eliminar instancias previas de <i>Certbot</i></h2>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Si hubo algún error en el proceso de creación del certificado SSL, <i>Certbot</i> suele crear un archivo llamado <code>lock</code> para indicar que está en ejecución. Si el proceso se interrumpió, este archivo puede quedar activo y se debe detener y eliminar junto con las instancias activas de <i>Certbot</i>.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Eliminar el archivo de bloqueo de <i>Certbot</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo rm /var/lib/apt/lists/lock
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Limpiar los archivos de bloqueo de <i>dpkg</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo rm /var/lib/dpkg/lock-frontend && sudo rm /var/cache/apt/archives/lock
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Identificar procesos activos de <i>Certbot</i>. Anotar las ID de los procesos activos de <i>Certbot</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>ps aux | grep certbot
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Termina los procesos identificados usando sus <b>PID.</b></span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo kill -9 <PID_del_proceso_certbot>
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Verificar que ya no existan procesos activos de <i>Certbot</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>ps aux | grep certbot
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/KjwXYsds/image-5.png' alt='image 5'>
+<h2>Verificar la renovación automática de <i>Certbot</i></h2>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'><i>Certbot</i> configura automáticamente un <code>cron job</code> o un <code>systemd timer</code> para renovar los certificados antes de que expiren.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Para simular el proceso de renovación y verificar que funcione correctamente, ejecutar el siguiente comando. Este proceso <b>no renueva el certificado si no es necesario</b>. Si no hay errores, significa que la renovación automática está configurada correctamente.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo certbot renew --dry-run
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/KxjGMMWk/image-6.png' alt='image 6'>
+<h2>Verificar la configuración SSL</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Verificación visual:</b> Acceder al dominio (ej. <code>https://mi_dominio.com</code>) desde un navegador web y verificar que ahora aparece un ícono de candado 🔒 en la barra de direcciones, indicando una conexión segura (con <b>HTTPS</b>).</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/xtbCQp0P/image-7.png' alt='image 7'>
+<p><b>Sin certificado SSL</b></p>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/TxymdgTs/image-8.png' alt='image 8'>
+<p><b>Con certificado SSL</b></p>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Verificación de redirección HTTPS:</b> Si intenta acceder usando <code>http://mi_dominio.com</code>, debería ser redirigido automáticamente a la versión HTTPS.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Verificación con herramientas en línea:</b> Para una verificación más profunda de la calidad del SSL, se puede usar herramientas como <i>SSL Labs Server Test</i> (<a target='_blank' rel='noopener noreferrer' href='https://www.ssllabs.com/ssltest/'>https://www.ssllabs.com/ssltest/</a>).</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/9HqBtJDQ/image-9.png' alt='image 9'>
+<h2>Actualizar el correo de contacto de <i>Certbot</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Para cambiar la dirección de correo electrónico asociada a los certificados <i>Let's Encrypt</i> (por ejemplo a cuentas de correo del propio dominio una vez se configuren), ejecutar el siguiente comando, reemplazando <code>mi_correo@mi_dominio.com</code> con la dirección de correo electrónico real al que desea actualizar.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo certbot register --update-registration --email mi_correo@mi_dominio.com
+</code></pre></div>
+
+<h1>➡️ Ver también</h1>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/22230aada13080f3b8ddd2a0ee9dac4c?pvs=21'>VPS desde cero + EasyPanel + n8n + EvolutionAPI</a>
+</span></div>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=PukQO6AOvKY'>https://www.youtube.com/watch?v=PukQO6AOvKY</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=4Or-TPwDRZA'>https://www.youtube.com/watch?v=4Or-TPwDRZA</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://certbot.eff.org/instructions?ws=nginx&os=snap#:~:text=Nginx%20on%20Linux%20(snap'>Certbot Instructions</a>)</p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04-es'>Cómo proteger Nginx con Let´s Encrypt en Ubuntu 20.04 | DigitalOcean</a></p>
+

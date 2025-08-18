@@ -1,0 +1,175 @@
+<h1>🏁 Objetivos</h1>
+
+<p>Para interactuar con los modelos de inteligencia artificial de <i>Gemini</i> desde la línea de comandos en un entorno <i>Windows</i>, el <i>Gemini CLI</i> es una herramienta fundamental. Esta guía tiene como objetivo detallar los pasos para instalar y configurar el <i>Gemini CLI</i> en un entorno <i>Windows Subsystem for Linux</i> (<i>WSL</i>), aprovechando las ventajas de una integración más fluida con el sistema operativo anfitrión y los límites de uso más amplios ofrecidos por la autentificación <b>OAuth</b>.</p>
+
+<p>Es necesario tener instalado <i>WSL</i> y una distribución de <i>Linux</i> (<i>Ubuntu</i>, en este caso) y es fundamental configurar correctamente las dependencias para asegurar un funcionamiento estable y eficiente del <b>CLI</b>, evitando los inconvenientes presentados por otros métodos de instalación. <i>Gemini CLI</i> requiere <i>Node.js</i> y <i>npm</i>, por lo que se instalará la versión <b>LTS</b> (<b>Long Term Support</b>) más reciente para asegurar la compatibilidad.</p>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'><b>NOTA:</b> Esta guía usará el método de autenticación <b>OAuth</b> para <i>Gemini CLI</i> porque ofrece un nivel gratuito de hasta <b>1,000 solicitudes de modelo por día</b> (60 solicitudes por minuto), significativamente más amplio que el límite de 100 solicitudes por día usando claves API de <i>Gemini 2.5 Pro</i>.
+</span></div>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Verificar la instalación de <i>WSL</i> y <i>Ubuntu</i>.</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Abrir en <i>Windows</i> el símbolo del sistema (<i>CMD</i>), <i>PowerShell</i> directamente en el escritorio o por medio de un software de terminal (por ej. <i>Tabby</i>).</span></li>
+
+  <li><label class='task-checkbox'></label><span>Ingresar el siguiente comando.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>wsl -l -v
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Verificar que <code>Ubuntu</code> aparece en la lista con el estado <code>Stopped</code> o <code>Running</code> y <code>VERSION 2</code>. Si no se tiene <i>Ubuntu</i> o <i>WSL</i>, será necesario instalarlos primero.</span></li>
+
+</ul>
+
+<h2>Iniciar la terminal de <i>Ubuntu</i> en <i>WSL</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Escribir en la terminal <code>wsl</code> o buscar <code>Ubuntu</code> en el menú de inicio de <i>Windows</i> y abrir la aplicación para iniciar la distribución de <i>Ubuntu</i> que presentará un prompt de <b>shell</b> (ej. <code>tu_usuario@tu_equipo:~$</code> o <code>tu_usuario@tu_equipo:/mnt/c$</code>).</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes, introduciendo la contraseña de usuario si se solicita. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt update && sudo apt upgrade -y
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que <i>WSL</i> se reinicie por completo y conectarse de nuevo.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo reboot
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/qMS6yqZm/image.png' alt='image'>
+<h2>Instalar <i>Node.js</i> y <i>npm</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Eliminar cualquier versión anterior de <i>Node.js</i> y <i>npm</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt purge nodejs npm -y
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/jkbwgHX8/image-1.png' alt='image-1'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Añadir el repositorio de <i>NodeSource</i> para <i>Node.js v20 LTS</i>, ejecutando el script oficial de <i>NodeSource</i> para configurar el repositorio. Este script añade la clave <b>GPG</b> y el repositorio automáticamente. Esperar a que el script finalice y confirme con <code>Repository configured successfully</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/qYMLXKPM/image-2.png' alt='image-2'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Instalar <i>Node.js v20 LTS</i> y <i>npm</i>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt-get install nodejs -y
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/VWdD5fcN/image-3.png' alt='image-3'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Verificar la versión de <i>Node.js</i>. Se debe ver <code>v20.x.x</code>.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>node -v
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Verificar la versión de <i>npm</i>. Se debe ver <code>10.x.x</code> o superior.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>npm -v
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/pvQ40sRJ/image-4.png' alt='image-4'>
+<h2>Instalar <i>Gemini CLI</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la terminal de <i>Ubuntu</i>, ejecutar el siguiente comando y esperar que la instalación finalice (debe mostrar <code>added X packages</code>).</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo npm install -g @google/gemini-cli
+</code></pre></div>
+
+<h2>Autentificar <i>Gemini CLI</i> con OAuth</h2>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><b>NOTA.</b> Durante el proceso de autenticación, si se utiliza un antivirus (por ejemplo, <i>Avast</i>), es probable que este bloquee la interacción del <b>CLI</b> con <i>PowerShell</i> necesaria para abrir el navegador. Algunos antivirus pueden requerir agregar una excepción a los ejecutables o incluso una <b>desactivación temporal del escudo de comportamiento</b> para permitir que este proceso se complete.
+<ul>
+  <li>Intentar en primera instancia la autentificación de <i>Gemini CLI</i> con las defensas activas.</li>
+
+  <li>Si el antivirus bloquea el proceso de autentificación, agregar una excepción a la terminal y a <i>PowerShell</i> e intentarlo de nuevo.</li>
+
+  <li>Si aún se bloquea el proceso, será necesario desactivar <b>temporalmente</b> el escudo de protección en tiempo real del antivirus. Al finalizar exitosamente la autentificación en el navegador, reactivar inmediatamente las defensas del antivirus.</li>
+
+</span></div>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Iniciar el proceso de autenticación.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>gemini
+</code></pre></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Cuando se presente la opción de método de autenticación, seleccionar <code>Login with Google</code> (generalmente la primera opción).</span></li>
+
+  <li><label class='task-checkbox'></label><span>El navegador web predeterminado de <i>Windows</i> debe abrirse automáticamente, redirigiendo a una página de inicio de sesión de <i>Google</i>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Iniciar sesión con la cuenta personal de <i>Google</i>, otorgar los permisos solicitados por <code>Gemini Code Assist</code> y confirmar la solicitud para que aparezca el mensaje <code>Gemini Code Assist ahora tiene autorización para acceder a tu cuenta</code>.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Reactivar el antivirus si fue necesario desactivarlo.</span></li>
+
+</ul>
+
+<h2>Verificar la instalación</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Verificar la versión del <i>Gemini CLI</i>. Se debe ver la versión del <b>CLI</b> (ej. <code>0.1.9</code>), confirmando que la instalación y autenticación fueron exitosas.</span></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>gemini --version
+</code></pre></div>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=YFMTdFi20w4&t=93s'>https://www.youtube.com/watch?v=YFMTdFi20w4&t=93s</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=qqP1ucSiVkE'>https://www.youtube.com/watch?v=qqP1ucSiVkE</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://apidog.com/es/blog/gemini-cli-setup-guide/'>Google Lanza Gemini CLI: Acceso Gratis a Gemini 2.5 Pro + 1000 Solicitudes Diarias</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.datacamp.com/es/tutorial/gemini-cli'>Gemini CLI: Una guía con ejemplos prácticos</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://ts2.tech/en/everything-you-need-to-know-about-google-gemini-cli-features-news-and-expert-insights/'>Everything You Need to Know About Google Gemini CLI: Features, News, and Expert Insights</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.virtualizationhowto.com/2025/06/install-google-gemini-cli-in-windows-for-ai-command-line/'>Install Google Gemini CLI in Windows for AI Command Line!</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.linkedin.com/pulse/from-zero-hero-your-ultimate-guide-installing-gemini-cli-slobodian-4jbof'>From Zero to Hero: Your Ultimate Guide to Installing the Gemini CLI on Windows</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://github.com/google-gemini/gemini-cli'>https://github.com/google-gemini/gemini-cli</a></p>
+

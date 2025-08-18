@@ -1,0 +1,332 @@
+<p><b>Publicado:</b> Shawn Brink</p>
+
+<p><b>Fecha:</b> 25 de febrero de 2024</p>
+
+<h1>🏁 Objetivos</h1>
+
+<p>Esta guía muestra como agregar o remover la opción <code>Establecer propietario</code> al menú contextual de todos los ficheros, carpetas y unidades para cualquier usuario en Windows 10. Esto permite tomar posesión inmediata de un fichero, carpeta, unidad o contenidos cambiando el propietario al usuario actual y otorgar el SID <code>Owner_Rights</code> de permiso de acceso completo al propietario actual.</p>
+
+<p>Al hacer clic derecho o presionar y mantener presionado en un fichero, carpeta o unidad y hace clic en <code>Establecer propietario</code>, un aviso <b>UAC</b> le solicitará permiso para ejecutarse.</p>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>Si un usuario inicia sesión como <b>administrador</b>, el usuario simplemente puede hacer clic en <code>Si</code> para aprobar y tomar posesión. El propietario del fichero, carpeta o unidad se cambiará a la cuenta de usuario actual y se establecerán permisos para permitir el control total del propietario (SID <code>Owner_Rights</code>) del fichero, la carpeta o la unidad.
+</span></div>
+
+<div class='featured'>
+<span class='feat-icon'>ℹ️</span>
+<span class='feat-text'>Si un usuario inicia sesión como <b>usuario estándar</b>, el usuario necesitará ingresar la contraseña de un administrador para aprobar el cambio. El propietario del fichero, carpeta o unidad se cambiará a la cuenta seleccionada del administrador y no al usuario estándar y se establecerán permisos para permitir el control total del propietario (SID <code>Owner_Rights</code>) del fichero, la carpeta o la unidad al administrador.
+</span></div>
+
+<h2>⚠️ Limitaciones</h2>
+
+<ul>
+  <li>Debe ser <b>administrador</b> para poder agregar, eliminar y usar la opción <code>Establecer propietario</code> del menú contextual.</li>
+
+  <li>La opción <code>Establecer propietario</code> en el menú contextual no está disponible si hace clic derecho en la unidad <code>C:\</code> o las carpetas <code>C:\Program Files</code>, <code>C:\Program Files (x86)</code>, <code>C:\ProgramData</code>, <code>C:\Users</code> y <code>C:\Windows</code>. Esta limitación existe ya que modificar la propiedad de la unidad C:\ o estas carpetas de sistema puede provocar inestabilidad en Windows, pues también tomaría posesión de todo su contenido al mismo tiempo. Si puede usar la opción <code>Establecer propietario</code> en el menú contextual en ficheros y carpetas dentro de las ubicaciones arriba mencionadas y en todas las unidades que no sean las unidades C y FAT32.</li>
+
+  <li>Los ficheros ejecutables (<b>EXE</b>, <b>CMD</b>, <b>MSI</b>) tendrán la opción <code>Establecer propietario</code> en el menú contextual sin reemplazar la de <code>Ejecutar como administrador</code>.</li>
+
+  <li>Tomar posesión de una unidad <b>FAT32</b> no funciona y obtendrá un error indicando que los permisos de fichero solo son compatibles con las unidades <b>NTFS</b> y <b>REFS</b>.</li>
+
+</ul>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Seleccionar una opción: <b>Agregar</b>, <b>Agregar con pausa</b> o <b>Eliminar</b></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Agregar la opción <code>Establecer propietario</code> al menú contextual.</b> Disponibles dos opciones: <b>a)</b> Acceso directo o <b>b)</b> Mediante <code>Shift + Clic derecho</code> al menú contextual.</span></li>
+
+</ul>
+
+<ul>
+  <li><b><code>Add_Take_Ownership_to_context_menu.reg</code></b></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+
+; Created by: Shawn Brink
+; Created on: January 28, 2015
+; Updated on: February 25, 2024
+; Tutorial: https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html
+
+[-HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+[-HKEY_CLASSES_ROOT\*\shell\runas]
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+@="Establecer propietario"
+"Extended"=-
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"NeverDefault"=""
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+"IsolatedCommand"= "powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership]
+@="Establecer propietario"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\Users\" OR System.ItemPathDisplay:=\"C:\\ProgramData\" OR System.ItemPathDisplay:=\"C:\\Windows\" OR System.ItemPathDisplay:=\"C:\\Windows\\System32\" OR System.ItemPathDisplay:=\"C:\\Program Files\" OR System.ItemPathDisplay:=\"C:\\Program Files (x86)\")"
+"Extended"=-
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q') -Verb runAs\""
+"IsolatedCommand"="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q') -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas]
+@="Establecer propietario"
+"Extended"=-
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\\")"
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+</code></pre></div>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/Add_Take_Ownership_to_context_menu.reg'>Add_Take_Ownership_to_context_menu.reg</a></p>
+
+<ol>
+  <li><b>Mediante <code>Shift + Clic derecho</code></b>. Descargar el fichero o crear un fichero de texto con la extensión <code>.reg</code> y este contenido:</li>
+
+<ul>
+  <li><b><code>Add_Shift+Right-Click_Take_Ownership_to_context_menu.reg</code></b></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+
+; Created by: Shawn Brink
+; Created on: January 28, 2015
+; Updated on: February 25, 2024
+; Tutorial: https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html
+
+[-HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+[-HKEY_CLASSES_ROOT\*\shell\runas]
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+@="Establecer propietario"
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"NeverDefault"=""
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+"IsolatedCommand"= "powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership]
+@="Establecer propietario"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\Users\" OR System.ItemPathDisplay:=\"C:\\ProgramData\" OR System.ItemPathDisplay:=\"C:\\Windows\" OR System.ItemPathDisplay:=\"C:\\Windows\\System32\" OR System.ItemPathDisplay:=\"C:\\Program Files\" OR System.ItemPathDisplay:=\"C:\\Program Files (x86)\")"
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q') -Verb runAs\""
+"IsolatedCommand"="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q') -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas]
+@="Establecer propietario"
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\\")"
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+</code></pre></div>
+
+</ol>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/Add_ShiftRight-Click_Take_Ownership_to_context_menu.reg'>Add_Shift+Right-Click_Take_Ownership_to_context_menu.reg</a></p>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Agregar la opción <code>Establecer propietario</code> con pausa al menú contextual.</b> Disponibles dos opciones: <b>a)</b> Acceso directo o <b>b)</b> Mediante <code>Shift + Clic derecho</code> al menú contextual.</span></li>
+
+</ul>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Esta opción detiene el comando cuando usa la opción <code>Establecer propietario</code> en el menú contextual para poder ver los resultados del comando. Esto es útil para verificar si cambió la propiedad y los permisos se procesaron con éxito.
+</span></div>
+
+<ol>
+  <li><b>Acceso directo.</b> Descargar el fichero o crear un fichero de texto con la extensión <code>.reg</code> y este contenido:</li>
+
+<ul>
+  <li><b><code>Add_Take_Ownership_with_Pause_to_context_menu.reg</code></b></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+
+; Created by: Shawn Brink
+; Created on: January 28t, 2015
+; Updated on: February 25, 2024
+; Tutorial: https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html
+
+[-HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+[-HKEY_CLASSES_ROOT\*\shell\runas]
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+@="Establecer propietario"
+"Extended"=-
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"NeverDefault"=""
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l & pause' -Verb runAs\""
+"IsolatedCommand"= "powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l & pause' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership]
+@="Establecer propietario"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\Users\" OR System.ItemPathDisplay:=\"C:\\ProgramData\" OR System.ItemPathDisplay:=\"C:\\Windows\" OR System.ItemPathDisplay:=\"C:\\Windows\\System32\" OR System.ItemPathDisplay:=\"C:\\Program Files\" OR System.ItemPathDisplay:=\"C:\\Program Files (x86)\")"
+"Extended"=-
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q & pause') -Verb runAs\""
+"IsolatedCommand"="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q & pause') -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas]
+@="Establecer propietario"
+"Extended"=-
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\\")"
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c & Pause"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c & Pause"
+</code></pre></div>
+
+</ol>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/Add_Take_Ownership_with_Pause_to_context_menu.reg'>Add_Take_Ownership_with_Pause_to_context_menu.reg</a></p>
+
+<ol>
+  <li><b>Mediante <code>Shift + Clic derecho</code></b>. Descargar el fichero o crear un fichero de texto con la extensión <code>.reg</code> y este contenido:</li>
+
+<ul>
+  <li><b><code>Add_Shift+Right-Click_Take_Ownership_with_Pause_to_context_menu.reg</code></b></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+
+; Created by: Shawn Brink
+; Created on: January 28, 2015
+; Updated on: February 25, 2024
+; Tutorial: https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html
+
+[-HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+[-HKEY_CLASSES_ROOT\*\shell\runas]
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+@="Establecer propietario"
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"NeverDefault"=""
+
+[HKEY_CLASSES_ROOT\*\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l & pause' -Verb runAs\""
+"IsolatedCommand"= "powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l & pause' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership]
+@="Establecer propietario"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\Users\" OR System.ItemPathDisplay:=\"C:\\ProgramData\" OR System.ItemPathDisplay:=\"C:\\Windows\" OR System.ItemPathDisplay:=\"C:\\Windows\\System32\" OR System.ItemPathDisplay:=\"C:\\Program Files\" OR System.ItemPathDisplay:=\"C:\\Program Files (x86)\")"
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+
+[HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership\command]
+@="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q & pause') -Verb runAs\""
+"IsolatedCommand"="powershell -windowstyle hidden -command \"$Y = ($null | choice).Substring(1,1); Start-Process cmd -ArgumentList ('/c takeown /f \\\"%1\\\" /r /d ' + $Y + ' && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q & pause') -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas]
+@="Establecer propietario"
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="middle"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\\")"
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c & Pause"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c & Pause"
+</code></pre></div>
+
+</ol>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/Add_ShiftRight-Click_Take_Ownership_with_Pause_to_context_menu.reg'>Add_Shift+Right-Click_Take_Ownership_with_Pause_to_context_menu.reg</a></p>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span><b>Eliminar la opción <code>Establecer propietario</code> del menú contextual.</b> Esta es la opción predeterminada.</span></li>
+
+</ul>
+
+<ul>
+  <li><b><code>Remove_Take_Ownership_from_context_menu.reg</code></b></li>
+
+</ul>
+
+<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>Windows Registry Editor Version 5.00
+
+; Created by: Shawn Brink
+; Created on: January 28, 2015
+; Updated on: January 11, 2021
+; Tutorial: https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html
+
+[-HKEY_CLASSES_ROOT\*\shell\TakeOwnership]
+[-HKEY_CLASSES_ROOT\*\shell\runas]
+[-HKEY_CLASSES_ROOT\Directory\shell\TakeOwnership]
+[-HKEY_CLASSES_ROOT\Drive\shell\runas]
+</code></pre></div>
+
+<p><a target='_blank' rel='noopener noreferrer' href='../assets/Remove_Take_Ownership_from_context_menu.reg'>Remove_Take_Ownership_from_context_menu.reg</a></p>
+
+<h2>Insertar la configuración seleccionada al Registro</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Guardar el fichero <code>.reg</code> seleccionado.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En el Explorador de archivos, hacer doble clic o ejecutar con permisos de administrador el fichero <code>.reg</code> para insertar la configuración al Registro.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Cuando se le solicite, seleccione <code>Ejecutar</code> → <code>Sí</code> (UAC) → <code>Sí</code> y <code>Aceptar</code> para autorizar la acción.</span></li>
+
+  <li><label class='task-checkbox'></label><span><b>Opcional</b>. Si desea, puede eliminar el fichero <code>.reg</code> seleccionado.</span></li>
+
+</ul>
+
+<h1>✅ Notas</h1>
+
+<ul>
+  <li>Si desea tener una ubicación personalizada fuera del menú contextual, puede publicar una solicitud en la <a target='_blank' rel='noopener noreferrer' href='https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html'>página web del tutorial</a>. El autor le entregará un fichero <code>.reg</code> personalizado.</li>
+
+  <li>Para obtener una versión de Windows 11 de este tutorial, consulte (en inglés): <a target='_blank' rel='noopener noreferrer' href='https://www.elevenforum.com/t/add-take-ownership-to-context-menu-in-windows-11.1230'>Agregar o remover la toma de propiedad de ficheros al menú contextual en Windows 11</a>.</li>
+
+</ul>
+
+<h1>🎞️ Videos</h1>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.tenforums.com/tutorials/3841-add-take-ownership-context-menu-windows-10-a.html'>Add Take Ownership to Context Menu in Windows 10</a></p>
+

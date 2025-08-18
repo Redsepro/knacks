@@ -1,0 +1,152 @@
+/*
+* KNACK STYLE: Metro
+*/
+
+/* --- LAYOUT AND BACKGROUND COLORS --- */
+body {
+  background-color: #f9f9f9;
+  color: #000;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+}
+
+aside#toc-panel {
+  background-color: #fff;
+  padding: 20px 10px;
+}
+
+div#content-panel {
+  background-color: #f9f9f9;
+  padding: 20px 40px;
+}
+
+/* --- RESIZER STYLES --- */
+div#resizer {
+  background-color: #ccc;
+  width: 5px;
+  cursor: ew-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* --- TOC STYLES --- */
+#toc {
+  margin-right: 5px;
+}
+
+#toc ul, #toc ul ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+#toc ul li {
+  font-size: 0.9em;
+  margin-bottom: 0.3em;
+}
+
+#toc a {
+  color: #1e1e1e;
+  text-decoration: none;
+}
+
+#toc a:hover {
+  text-decoration: underline;
+}
+
+/* --- CONTENT STYLES --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #1e1e1e;
+  font-weight: 300;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+p.title {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 2.8rem;
+  font-weight: 200;
+  color: #1e1e1e;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 200;
+}
+
+h2 {
+  font-size: 2.2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.3em;
+}
+
+p {
+  margin-bottom: 1.2em;
+}
+
+a {
+  color: #0078d7;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul, ol {
+  padding-left: 20px;
+}
+
+blockquote {
+  border-left: 5px solid #0078d7;
+  color: #4a4a4a;
+  padding-left: 15px;
+  margin: 1.5em 0;
+}
+
+.boxCode, code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  background-color: #e5e5e5;
+  color: #222;
+  padding: 0.2em 0.4em;
+}
+
+.boxCode {
+  padding: 1em;
+}
+
+/* Metro: featured, task-list and boxCode button */
+.boxCode > button{ position:absolute; right:12px; top:12px; font-family:'Segoe UI',sans-serif; font-size:0.85em; background:#0078d7; color:#fff; border:none; padding:6px 10px; border-radius:2px; cursor:pointer }
+.boxCode > button:hover{ opacity:0.95 }
+pre{ overflow:auto }
+.featured{ background:#eaf6ff; border-left:4px solid #0078d7; padding:12px; margin:12px 0; border-radius:4px; display:flex; gap:10px }
+.feat-icon{ color:#0078d7 }
+.feat-text{ flex:1 }
+
+.task-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px }
+.task-checkbox{ width:14px; height:14px; border:1.6px solid #cfcfcf; background:#fff; border-radius:2px; cursor:pointer }
+.task-checkbox.is-checked{ background:#0078d7; border-color:#0078d7 }
+.task-checkbox::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:14px; opacity:0 }
+.task-checkbox.is-checked::after{ opacity:1 }
+
+.btn-search{ background:#0078d7; color:#fff; border:none; padding:6px 10px; border-radius:2px; cursor:pointer }
+.btn-search:hover{ opacity:0.95 }
+
+/* Search tweaks: Metro - flat, compact */
+#global-search{ width:100%; padding:7px 9px; font-size:0.95rem; border:1px solid #cfcfcf; border-radius:2px; background:#fff }
+.btn-search { padding:6px 8px; font-size:0.95rem; border-radius:2px }
+
+#global-search{
+  width:100%;
+  padding:8px 10px;
+  font-size:0.95rem;
+  border:1px solid #ccc;
+  border-radius:2px;
+  background:#fff;
+}

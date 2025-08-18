@@ -1,0 +1,252 @@
+<h1>🏁 <b>Objetivos</b></h1>
+
+<p><i>Oracle Cloud Infrastructure</i> (<i>OCI</i>) ofrece una capa <b>Siempre Gratuito</b> (<b>Always Free)</b> que permite a los usuarios crear y mantener un servidor virtual privado (<b>VPS</b>) sin costo alguno de por vida, sujeto a ciertos límites de recursos. Este VPS gratuito es una herramienta potente para alojar sitios web, aplicaciones, servidores de desarrollo o probar nuevas tecnologías sin incurrir en gastos.</p>
+
+<p>El objetivo de esta guía es proporcionar los pasos detallados y claros para configurar una instancia de computación específica: <b>VM.Standard.A1.Flex</b> con arquitectura <i>ARM</i> (comúnmente conocida como <i>Ampere A1.Flex</i>) bajo el programa <b>Always Free</b> de <i>Oracle Cloud</i>, utilizando la imagen de <i>Ubuntu</i> 24.04. Al seguir estos pasos, se establecerá una base robusta y gratuita para desplegar servicios como <i>WordPress</i>, <i>EasyPanel</i>, <i>n8n</i> y <i>EvolutionAPI</i>.</p>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Crear una cuenta en <i>Oracle Cloud</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Ir a la URL de la Consola de <i>Oracle Cloud</i> (Para América Latina: <a target='_blank' rel='noopener noreferrer' href='https://www.oracle.com/latam/'>https://www.oracle.com/latam/</a>).</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Ver cuentas</code> y seleccionar <code>Registrarse para el Modo Gratuito de Cloud</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/9kzqDnkX/image.png' alt='image'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Comienza gratis</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/ccC7q9Rt/image-1.png' alt='image 1'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En <code>Información de cuenta</code>, rellenar los campos de <code>País/Territorio</code>, <code>Nombre</code>, <code>Apellido</code> y <code>Correo electrónico</code>, completar el proceso de verificación y hacer clic en <code>Verificar mi correo electrónico</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Q7Gj0ypP/image-2.png' alt='image 2'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Al recibir el correo de verificación, hacer clic en <code>Verificar correo</code> para completar el proceso en la página de Oracle Cloud, ingresando una contraseña, el tipo de cliente (empresarial o individual) y el nombre de usuario (<b>tenancy name</b>) que se usará cada vez que inicie sesión.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/YTjym4pX/image-3.png' alt='image 3'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Seleccionar una <code>Región principal</code>, que generalmente debe ser lo más cercano a la ubicación del usuario y el público objetivo. En el caso de Ecuador, puede ser Colombia.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/1tJXJNbK/image-4.png' alt='image 4'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Llenar la <code>Información de dirección</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/9mLNGKMn/image-5.png' alt='image 5'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Completar el proceso de <b>Verificación de Pago/Identidad</b>. Se necesita una tarjeta de crédito válida donde cobran un monto de $1,00 que será devuelto de inmediato.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Y4F15F27/image-6.png' alt='image 6'>
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/MDB0D94z/image-7.png' alt='image 7'>
+<h2>Iniciar sesión en <i>Oracle Cloud</i></h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Regresar a la URL de <i>Oracle Cloud</i> (Para América Latina: <a target='_blank' rel='noopener noreferrer' href='https://www.oracle.com/latam/'>https://www.oracle.com/latam/</a>). Hacer clic en <code>Ver cuentas</code> y seleccionar <code>Iniciar sesión en Cloud</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/9kzqDnkX/image.png' alt='image'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En <code>Nombre de cuenta de nube</code>, introducir el nombre de usuario <b>(tenancy name)</b> que definió en la creación de la cuenta y hacer clic en <code>Siguiente</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/B5w0tn4C/image-8.png' alt='image 8'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la página de <code>Conexión a la cuenta de Oracle Cloud</code>, ingresar nombre de usuario o correo electrónico y la contraseña.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Conectar</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/VcXhJ2q6/image-9.png' alt='image 9'>
+<h2>Crear una nueva Instancia de computación (VPS)</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la consola, hacer clic en el <b>Menú principal</b> (tres líneas horizontales <code>☰</code>) en la esquina superior izquierda.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Seleccionar <b><code>Recursos informáticos</code></b>> <b><code>Instancias</code></b>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/GfVR7vmW/image-10.png' alt='image 10'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la página de <code>Instancias</code>, hacer clic en <b><code>Crear instancia</code></b>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/v4SDzS92/image-11.png' alt='image 11'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la página de <code>Crear instancia informática</code>, agregar un nombre a su nueva instancia o dejar la generada de forma automática.</span></li>
+
+  <li><label class='task-checkbox'></label><span>En la sección de <code>Ubicación</code>, si dispone de varias ubicaciones, seleccione la que desee.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Gfr4kh0r/image-12.png' alt='image 12'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En <code>Opciones Avanzadas</code>, confirmar que esté seleccionada la opción <code>Capacidad bajo demanda</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/N6F4KzQt/image-13.png' alt='image 13'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la sección <code>Imagen y unidad</code>, puede elegir el <b>sistema operativo</b> o dejar el predeterminado (<i>Oracle Linux</i>).</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/8nFwS3m0/image-14.png' alt='image 14'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>SI desea cambiarlo, hacer clic en <code>Cambiar imagen</code>. En <code>Seleccionar Una Imagen</code>, puede elegir otro <b>sistema operativo</b>, por ejemplo <i>Canonical Ubuntu 24.04</i>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/SDzhM0DD/image-15.png' alt='image 15'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Seleccionar imagen</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/pjNGVxVF/image-16.png' alt='image 16'>
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'>Para acceder a la instancia <b>Siempre Gratuito</b> (<b>Always Free</b>), en la sección <code>Unidad</code> es <b>OBLIGATORIO</b> cambiar la unidad.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la sección <code>Unidad</code> hacer clic en <code>Cambiar unidad</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/RpVVj98Y/image-17.png' alt='image 17'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la página<code>Examinar todas las unidades</code>: En <code>Tipo de instancia</code> seleccionar <code>Máquina virtual</code> y en <code>Series de unidades</code> seleccionar<code>Ampere</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/MkmRCWY9/image-18.png' alt='image 18'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la lista inferior seleccionar <code>VM.Standard.A1 Flex (Siempre gratis elegible)</code>, hacer clic en el triangulo a su izquierda y modificar las siguientes opciones:</span></li>
+
+</ul>
+
+<ul>
+  <li><b>Cantidad de memoria (GB):</b> <code>24</code>.</li>
+
+</ul>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><b>IMPORTANTE:</b> Aunque es posible elegir valores menores o mayores, no se deben sobrepasar esos límites para conservar la instancia <b>Siempre gratuita</b>.
+</span></div>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Seleccionar unidad</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/whDQM00d/image-19.png' alt='image 19'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Siguiente</code> para continuar a la sección <code>Seguridad</code> y a continuación volver a hacer clic en <code>Siguiente</code> para continuar a la sección <code>Red</code>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Si no dispone de una <b>Red virtual en la nube</b> (necesaria para las conexiones con la instancia), en la sección <code>Red</code> elegir <code>Crear nueva red virtual en la nube</code> y asignar nombres a las nuevas <code>Tarjeta de interfaz de red virtual</code> (<b>VNIC</b>) y a la <code>Red virtual en la nube</code> (<b>VCN</b>).</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/BVpD2DHK/image-20.png' alt='image 20'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En la sección <code>Agregar claves SSH</code>, seleccionar <code>Generar un par de claves para mí</code> y hacer clic en <code>Descargar clave privada</code> y <code>Descargar clave pública</code> para descargar las claves que permiten una conexión remota con el servidor.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/LhNXGHz5/image-21.png' alt='image 21'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Siguiente</code> para continuar a la sección <code>Almacenamiento</code>.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>En <code>Volumen de inicio</code>, activar la opción <code>Especificar un tamaño de volumen de inicio</code> y verificar los siguientes valores:</span></li>
+
+</ul>
+
+<ul>
+  <li><b>Rendimiento de volumen de inicio (VPU):</b> <code>10</code>.</li>
+
+</ul>
+
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><b>IMPORTANTE:</b> Aunque es posible elegir valores mayores, no se deben sobrepasar esos límites para conservar la instancia <b>Siempre gratuita</b>.
+</span></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/HLvbfbTT/image-22.png' alt='image 22'>
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Siguiente</code> para continuar a la sección <code>Información básica</code> donde puede revisar la configuración elegida.</span></li>
+
+</ul>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>Hacer clic en <code>Crear</code>. También puede revisar el costo estimado de la instancia haciendo clic en <code>Ver costo estimado</code> (en este caso, debe decir $2,12/mes por la unidad de volumen (50GB), pero que si no se sobrepasan los límites de trabajo de la instancia es muy probable nunca sean cobrados.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/7tj8HS5Y/image-23.png' alt='image 23'>
+<div class='featured'>
+<span class='feat-icon'>⚠️</span>
+<span class='feat-text'><b>IMPORTANTE:</b> Al tratarse de una configuración <b>Siempre gratuita</b>, es muy probable que <i>Oracle Cloud</i> responda con un error de creación por no disponer de espacios disponibles en la región elegida. Existen dos opciones para una creación exitosa:
+<ol>
+  <li>Intentar varias veces hasta que resulte, lo que puede tomar días o semanas.</li>
+
+  <li>Actualizar la cuenta de usuario a una configuración de pago, donde la creación de instancias es inmediata, pero <b>si no se sobrepasan de los límites especificados</b>, no se incurren en pagos de consumo.</li>
+
+</span></div>
+
+</ol>
+
+<h2>Lanzar la instancia</h2>
+
+<ul class='task-list'>
+  <li><label class='task-checkbox'></label><span>La instancia comenzará el proceso de aprovisionamiento. Su estado cambiará de <code>Provisioning</code> a <code>Ejecutándose</code>. Esto puede tardar unos minutos.</span></li>
+
+  <li><label class='task-checkbox'></label><span>Una vez que la instancia esté en ejecutándose, se puede ver la <b>IP pública</b> en la página de detalles de la instancia. Anotar esta IP, ya que se necesitará para conectarse vía SSH y para configuraciones futuras.</span></li>
+
+</ul>
+
+<h1>➡️ Ver también</h1>
+
+<div class='featured'>
+<span class='feat-icon'>&#x2139&#xFE0F</span>
+<span class='feat-text'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/21e30aada1308069b44afd3edd4aed73?pvs=21'>VPS desde cero + EasyPanel + n8n + EvolutionAPI</a>
+</span></div>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=l0tSPtSCp7M'>https://www.youtube.com/watch?v=l0tSPtSCp7M</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=uyuHSFo0QQo&t=378s'>https://www.youtube.com/watch?v=uyuHSFo0QQo&t=378s</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.oracle.com/es/cloud/free/'>Accede a servicios en la nube de forma gratuita</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://medium.com/@harendra21/how-i-am-using-a-lifetime-100-free-server-bd241e3a347a'>How I Am Using a Lifetime 100% Free Server</a></p>
+
