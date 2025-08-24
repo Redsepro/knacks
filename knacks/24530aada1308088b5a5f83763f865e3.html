@@ -1,0 +1,184 @@
+<h1>🏁 Objetivos</h1>
+
+<p><i>Git</i> es un robusto sistema de control de versiones que permite mejorar los procesos de creación, edición y versionado de todo tipo de código fuente o documentos. Este Knack asiste en la instalación de <i>Git</i> en un entorno de <i>Windows</i> y conectarlo con <i>GitHub</i> para crear una poderosa herramienta que permite respaldar archivos, rastrear cambios y facilitar una colaboración ordenada.</p>
+
+<h1>👨🏽‍🏫 Instrucciones</h1>
+
+<h2>Descargar e instalar <i>Git</i></h2>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Abrir un navegador web y visitar el sitio web oficial de <i>Git:</i> <code>https://git-scm.com/download/win</code>.</span></li>
+
+  <li><label class='chk-task'></label><span>Descargar la versión más reciente del instalador de <i>Git</i>. El sitio detectará el sistema operativo automáticamente y ofrecerá la descarga más adecuada.</span></li>
+
+  <li><label class='chk-task'></label><span>Ejecutar el instalador de <i>Git</i> descargado.</span></li>
+
+  <li><label class='chk-task'></label><span>Seguir los pasos del asistente de instalación. Se pueden dejar todas las opciones por defecto, a menos que se tenga alguna necesidad específica. Las opciones por defecto son seguras y funcionales para la mayoría de los usuarios.</span></li>
+
+</ul>
+
+<h2>Configurar <i>Git</i> por primera vez</h2>
+
+<div class='div-featured'>
+<span class='img-featured'>ℹ️</span>
+<span class='txt-featured'><i>Git</i> instala una terminal propia llamada <i>Git Bash</i>. Abrirla desde el menú de inicio de <i>Windows,</i> buscando <code>Git Bash</code> en el menú de inicio.
+</span></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>En la terminal de <i>Git Bash</i>, configurar un nombre de usuario global para <i>Git</i>. Esto define e identifica los <b>commits</b> (instancias de cambio) en todos los proyectos. Reemplazar <code>user_name</code> por el nombre del usuario.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>git config --global user.name "user_name"
+</code></pre></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Configurar una dirección de correo electrónico global. Esta debe ser la misma dirección que se usará para la cuenta de <i>GitHub</i>. Reemplazar <code>email@dominio.com</code> por el correo electrónico real.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>git config --global user.email "email@dominio.com"
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/vvXkcF6j/image.png' alt='image'>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar que la configuración se guardó correctamente.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>git config --list
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/v6DmQ0MR/image-1.png' alt='image 1'>
+<h2>Conectar <i>Git</i> con <i>GitHub</i></h2>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Generar en la terminal de <i>Git Bash</i> un par de claves <b>SSH</b> que permiten la conexión segura entre la máquina local y <i>GitHub</i> sin tener que introducir la contraseña en cada paso.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>ssh-keygen -t ed25519 -C "email@dominio.com"
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/VpNc8rD7/image-2.png' alt='image 2'>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Cuando pida "<code>Enter a file in which to save the key</code>", presionar <code>Enter</code> para aceptar la ubicación predeterminada.</span></li>
+
+</ul>
+
+<div class='div-featured'>
+<span class='img-featured'>ℹ️</span>
+<span class='txt-featured'>También pedirá una frase de contraseña (<b>passphrase</b>) que se puede dejar en blanco presionando <code>Enter</code> si se quiere evitar la necesidad de introducir una contraseña cada vez que se use <i>Git</i>. Si decide poner una frase, la tendrá que introducir en cada conexión.
+</span></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Iniciar el agente <b>SSH</b> en segundo plano.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>eval "$(ssh-agent -s)"
+</code></pre></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Añadir la clave <b>SSH</b> al agente <b>SSH</b> que acaba de iniciar.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>ssh-add ~/.ssh/id_ed25519
+</code></pre></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Copiar la clave pública <b>SSH</b> al portapapeles.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>clip < ~/.ssh/id_ed25519.pub
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/NdKVPb7h/image-3.png' alt='image 3'>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>En un navegador, iniciar sesión en <i>GitHub,</i> ingresar a la sección de <code>SSH</code> y <code>GPG keys</code> en la configuración del perfil de <i>GitHub y h</i>acer clic en el botón <code>New SSH key</code>.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>https://github.com/settings/keys
+</code></pre></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/2YfpCJLW/image-4.png' alt='image 4'>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Dar un nombre descriptivo a la clave (Ejemplo: <code>PC de trabajo</code>) y pegar en el campo <code>Key</code> <i>*</i>*la clave pública que se copió.</span></li>
+
+  <li><label class='chk-task'></label><span>Guardar la clave haciendo clic en <code>Add SSH key</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/tPkKVcBx/image-5.png' alt='image 5'>
+<h2>Comprobar la conexión con <i>GitHub</i></h2>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Regresar a la terminal de <i>Git Bash</i> y probar la conexión con <i>GitHub</i>.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>ssh -T git@github.com
+</code></pre></div>
+
+<div class='div-featured'>
+<span class='img-featured'>ℹ️</span>
+<span class='txt-featured'>La primera vez que se conecta a un servidor a través de SSH, <i>Git</i> no reconoce la huella digital (<b>fingerprint</b>) del servidor de GitHub y preguntará si confía en esa conexión. A la pregunta <code>Are you sure you want to continue connecting (yes/no/[fingerprint])?</code>, escribir <code>yes</code> y presionar <code>Enter</code> para guardar la huella digital del servidor de GitHub. Esto solo ocurre la primera vez que se establece la conexión.
+</span></div>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/WZq8WGL/image-6.png' alt='image 6'>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Si la conexión fue exitosa, la respuesta del terminal será: <code>Hi nombre_de_usuario! You've successfully authenticated, but GitHub does not provide shell access</code>, que confirma que se ha autenticado correctamente con su clave SSH.</span></li>
+
+</ul>
+
+<h2>Configurar inicio de <i>Git Bash</i> en una carpeta específica</h2>
+
+<div class='div-featured'>
+<span class='img-featured'>ℹ️</span>
+<span class='txt-featured'>De forma predeterminada, la terminal de <i>Git Bash</i> se abre apuntando a la ruta <code>%HOMEDRIVE%%HOMEPATH%</code> (Generalmente <code>C:\Users\<usuario>\</code>). Si desea facilitar el flujo de trabajo, puede configurar para que <i>Git Bash</i> se abra automáticamente en una carpeta específica, por ejemplo donde almacena su documentación o código fuente de proyectos.
+</span></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Abrir la terminal <i>Git Bash</i>.</span></li>
+
+  <li><label class='chk-task'></label><span>Editar el archivo de configuración de Bash. <b>Si el archivo no existe, este comando lo creará</b>.</span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>nano ~/.bashrc
+</code></pre></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>En la última línea del archivo, agregar el siguiente comando, usando la ruta real a la carpeta que desea vincular. <b>Usar barras diagonales</b> <code>/</code> en lugar de barras invertidas <code>\</code><b>.</b></span></li>
+
+</ul>
+
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>cd /c/Users/user/Documents/mi-documentacion
+</code></pre></div>
+
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Guardar los cambios presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</span></li>
+
+</ul>
+
+<img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/nsVQBtnF/image-7.png' alt='image 7'>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Cerrar y volver a abrir <i>Git Bash</i> para que los cambios surtan efecto.</span></li>
+
+</ul>
+
+<h1>🎞️ Videos</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=jdXKwLNUfmg'>https://www.youtube.com/watch?v=jdXKwLNUfmg</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://www.youtube.com/watch?v=JWnZvHOYBDc'>https://www.youtube.com/watch?v=JWnZvHOYBDc</a></p>
+
+<h1>🔗 Enlaces relacionados</h1>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git'>Git - Instalación de Git</a></p>
+
+<p><a target='_blank' rel='noopener noreferrer' href='https://kinsta.com/es/base-de-conocimiento/instalar-git/'>Cómo Instalar Git en Windows, macOS y Linux</a></p>
+

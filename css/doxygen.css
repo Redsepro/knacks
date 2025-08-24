@@ -2,6 +2,31 @@
 * KNACK STYLE: Doxygen
 */
 
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 20px;
+  }
+  p.title {
+    font-size: 1.5em;
+    line-height: 1.2em;
+    border-bottom: 1px solid #e0e8f0;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #box-content {
+    padding: 20px 40px;
+  }
+  p.title {
+    font-size: 1.8em;
+    line-height: 1.4em;
+    border-bottom: 2px solid #c8d7e7;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #fff;
@@ -11,18 +36,17 @@ body {
   line-height: 1.4;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   background-color: #f7f9fc;
   padding: 10px;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #fff;
-  padding: 20px 40px;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
+div#bar-resizer {
   background-color: #c8d7e7;
   width: 5px;
   cursor: ew-resize;
@@ -34,26 +58,26 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-right: 5px;
 }
 
-#toc ul, #toc ul ul {
+#nav-toc ul, #nav-toc ul ul {
   list-style-type: none;
   padding-left: 10px;
 }
 
-#toc ul li {
+#nav-toc ul li {
   font-size: 0.9em;
   margin-bottom: 0.3em;
 }
 
-#toc a {
+#nav-toc a {
   color: #315891;
   text-decoration: none;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   text-decoration: underline;
 }
 
@@ -68,10 +92,8 @@ h1, h2, h3, h4 {
 
 p.title {
   font-family: inherit;
-  font-size: 1.8em;
   font-weight: bold;
   color: #315891;
-  border-bottom: 2px solid #c8d7e7;
   padding-bottom: 10px;
   margin-top: 0;
 }
@@ -111,35 +133,35 @@ blockquote {
   margin: 1em 0;
 }
 
-.boxCode, code {
+.div-code, code {
   font-family: 'Courier New', Courier, monospace;
   background-color: #f7f9fc;
   padding: 0.2em;
 }
 
-.boxCode {
+.div-code {
   border: 1px solid #c8d7e7;
   padding: 8px;
 }
 
-/* Doxygen: featured, task-list and boxCode button */
-.boxCode > button{ position:absolute; right:10px; top:10px; font-family:inherit; font-size:0.8em; background:#315891; color:#fff; border:none; padding:5px 8px; border-radius:3px; cursor:pointer }
-.boxCode > button:hover{ opacity:0.95 }
+/* Doxygen: featured, lst-task and div-code button */
+.div-code > button{ position:absolute; right:10px; top:10px; font-family:inherit; font-size:0.8em; background:#315891; color:#fff; border:none; padding:5px 8px; border-radius:3px; cursor:pointer }
+.div-code > button:hover{ opacity:0.95 }
 pre{ overflow:auto }
-.featured{ background:#f3f8ff; border:1px solid #c8d7e7; padding:12px; margin:12px 0; border-radius:6px; display:flex; gap:10px }
-.feat-icon{ color:#315891 }
-.feat-text{ flex:1 }
+.div-featured{ background:#f3f8ff; border:1px solid #c8d7e7; padding:12px; margin:12px 0; border-radius:6px; display:flex; gap:10px }
+.img-featured{ color:#315891 }
+.txt-featured{ flex:1 }
 
-.task-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px }
-.task-checkbox{ width:14px; height:14px; border:1.6px solid #9aaec6; background:#fff; border-radius:3px; cursor:pointer }
-.task-checkbox.is-checked{ background:#315891; border-color:#315891 }
-.task-checkbox::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:14px; opacity:0 }
-.task-checkbox.is-checked::after{ opacity:1 }
+.lst-task{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px }
+.chk-task{ width:14px; height:14px; border:1.6px solid #9aaec6; background:#fff; border-radius:3px; cursor:pointer }
+.chk-task.is-checked{ background:#315891; border-color:#315891 }
+.chk-task::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:14px; opacity:0 }
+.chk-task.is-checked::after{ opacity:1 }
 
 .btn-search{ background:#315891; color:#fff; border:none; padding:6px 10px; border-radius:3px; cursor:pointer }
 .btn-search:hover{ opacity:0.95 }
 
-#global-search{
+#txt-search{
   width:100%;
   padding:8px 10px;
   font-size:0.95rem;

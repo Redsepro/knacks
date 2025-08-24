@@ -2,6 +2,31 @@
 * KNACK STYLE: CHM
 */
 
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 10px;
+  }
+  p.title {
+    font-size: 1.5em;
+    line-height: 1.1em;
+    border-bottom: 1px solid #bbb;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #box-content {
+    padding: 10px 20px;
+  }
+  p.title {
+    font-size: 1.8em;
+    line-height: 1.3em;
+    border-bottom: 2px solid #ccc;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #e0e0e0;
@@ -18,7 +43,7 @@ img {
   margin: 5px 0;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   font-family: 'Microsoft Sans Serif', Arial, Helvetica, sans-serif;
   background-color: #fff;
   padding: 5px 15px 5px 5px;
@@ -28,15 +53,14 @@ aside#toc-panel {
   border-bottom: 1px solid #808080;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #fff;
-  padding: 10px;
   border: 1px solid #808080;
   border-style: inset;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
+div#bar-resizer {
   background-color: #f0f0f0;
   width: 10px;
   cursor: ew-resize;
@@ -48,17 +72,17 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-left: -15px;
 }
 
-#toc ul {
+#nav-toc ul {
   list-style-type: none;
   margin: 0;
   color: #444;
 }
 
-#toc ul li {
+#nav-toc ul li {
   font-size: 0.8em;
   margin: 0.3em 0;
   position: relative;
@@ -66,7 +90,7 @@ div#resizer {
 }
 
 /* First level node's icon (closed book) */
-#toc > ul > li::before {
+#nav-toc > ul > li::before {
   content: ''; /* Making sure pseudo-element exists */
   position: absolute;
   left: 0;
@@ -79,7 +103,7 @@ div#resizer {
 }
 
 /* Children nodes icon */
-#toc ul ul li::before {
+#nav-toc ul ul li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -92,7 +116,7 @@ div#resizer {
 }
 
 /* Selected first level node's icon (opened book) */
-#toc > ul > li.active::before {
+#nav-toc > ul > li.active::before {
   content: '';
   position: absolute;
   left: 0;
@@ -105,24 +129,24 @@ div#resizer {
 }
 
 /* Selected node */
-#toc li.active a {
+#nav-toc li.active a {
   color: white;
   background-color: #0078d7;
   padding: 0.2em 0;
 }
 
 /* Hovered selected node */
-#toc li.active a:hover {
+#nav-toc li.active a:hover {
   background-color: #004d8a;
 }
 
-#toc a {
+#nav-toc a {
   text-decoration: none;
   color: #000;
   cursor: default;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   padding: 0.2em 0;
   color: white;
   background-color: #60aff0;
@@ -155,9 +179,7 @@ p {
 
 p.title {
   font-family: 'Tahoma', 'Verdana', sans-serif;
-  font-size: 1.8em;
   font-weight: bold;
-  border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
   margin-top: 0;
   color: #000;
@@ -183,31 +205,31 @@ blockquote {
   margin: 1em 0;
 }
 
-.boxCode, code {
+.div-code, code {
   font-family: 'Courier New', monospace;
   background-color: #f0f0f0;
   padding: 0.2em 0.4em;
 }
 
-.boxCode {
+.div-code {
   margin: 10px 0;
   border: 1px solid #ccc;
 }
 
-.boxCode > button {
+.div-code > button {
   font-family: 'Microsoft Sans Serif', Arial, Helvetica, sans-serif;
   color: black;
   background-color: #c0c0c0;
   border: 0.5px solid black;
   border-radius: 0;
 }
-.boxCode > button:hover {
+.div-code > button:hover {
   color: white;
   background-color: #8d8d8d;
 }
 
 /* --- SEARCH STYLES --- */
-#global-search { 
+#txt-search { 
   font-family: 'Microsoft Sans Serif', Arial, Helvetica, sans-serif;
   /* font-size: 10pt; */
   font-size: 0.9rem;
@@ -219,7 +241,7 @@ blockquote {
   border: 1px solid #808080;
   border-radius: 2px;
 }
-#global-search:focus { 
+#txt-search:focus { 
   outline: none; 
   border-color: #0078d4; 
 }

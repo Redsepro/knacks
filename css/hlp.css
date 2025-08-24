@@ -2,6 +2,31 @@
 * KNACK STYLE: HLP
 */
 
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 20px;
+  }
+  p.title {
+    font-size: 1.5em;
+    line-height: 1.2em;
+    border-bottom: 1px solid #888;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #box-content {
+    padding: 20px 40px;
+  }
+  p.title {
+    font-size: 1.8em;
+    line-height: 1.4em;
+    border-bottom: 2px solid #666;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #e0e0e0;
@@ -11,18 +36,17 @@ body {
   line-height: 1.4;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   background-color: #c0c0c0;
   padding: 10px;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #fff;
-  padding: 20px 40px;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
+div#bar-resizer {
   background-color: #a0a0a0;
   width: 5px;
   cursor: ew-resize;
@@ -34,26 +58,26 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-right: 5px;
 }
 
-#toc ul, #toc ul ul {
+#nav-toc ul, #nav-toc ul ul {
   list-style-type: none;
   padding-left: 10px;
 }
 
-#toc ul li {
+#nav-toc ul li {
   font-size: 0.9em;
   margin-bottom: 0.3em;
 }
 
-#toc a {
+#nav-toc a {
   color: #000080;
   text-decoration: none;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   text-decoration: underline;
 }
 
@@ -68,10 +92,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p.title {
   font-family: 'Arial', sans-serif;
-  font-size: 1.8em;
   font-weight: bold;
   color: #000;
-  border-bottom: 2px solid #666;
   padding-bottom: 10px;
   margin-top: 0;
 }
@@ -110,34 +132,34 @@ blockquote {
   margin: 1em 0;
 }
 
-.boxCode, code {
+.div-code, code {
   font-family: 'Courier New', monospace;
   background-color: #c0c0c0;
   padding: 0.2em 0.4em;
 }
 
-.boxCode {
+.div-code {
   border: 1px solid #a0a0a0;
   padding: 8px;
 }
 
-/* HLP: featured, task-list and boxCode button */
-.boxCode > button{ position:absolute; right:8px; top:8px; font-family:Arial, sans-serif; font-size:0.8em; background:#c0c0c0; color:#000; border:1px solid #8a8a8a; padding:4px 6px; cursor:pointer }
-.boxCode > button:hover{ background:#a8a8a8 }
+/* HLP: featured, lst-task and div-code button */
+.div-code > button{ position:absolute; right:8px; top:8px; font-family:Arial, sans-serif; font-size:0.8em; background:#c0c0c0; color:#000; border:1px solid #8a8a8a; padding:4px 6px; cursor:pointer }
+.div-code > button:hover{ background:#a8a8a8 }
 pre{ overflow:auto }
-.featured{ background:#fff9e6; border:1px solid #e6d4a7; padding:10px; margin:10px 0; border-radius:4px; display:flex; gap:8px }
-.feat-icon{ color:#c08b00 }
-.feat-text{ flex:1 }
+.div-featured{ background:#fff9e6; border:1px solid #e6d4a7; padding:10px; margin:10px 0; border-radius:4px; display:flex; gap:8px }
+.img-featured{ color:#c08b00 }
+.txt-featured{ flex:1 }
 
-.task-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px }
-.task-checkbox{ width:14px; height:14px; border:1.6px solid #7a7a7a; background:#fff; border-radius:3px; cursor:pointer }
-.task-checkbox.is-checked{ background:#000080; border-color:#000080 }
-.task-checkbox::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:14px; opacity:0 }
-.task-checkbox.is-checked::after{ opacity:1 }
+.lst-task{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px }
+.chk-task{ width:14px; height:14px; border:1.6px solid #7a7a7a; background:#fff; border-radius:3px; cursor:pointer }
+.chk-task.is-checked{ background:#000080; border-color:#000080 }
+.chk-task::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:14px; opacity:0 }
+.chk-task.is-checked::after{ opacity:1 }
 
-#global-search{ padding:6px 8px; font-size:10pt; border:1px solid #a0a0a0; border-radius:2px }
+#txt-search{ padding:6px 8px; font-size:10pt; border:1px solid #a0a0a0; border-radius:2px }
 .btn-search{ padding:4px 6px; font-size:10pt }
 
 /* Search tweaks: HLP - compact legacy look */
-#global-search{ padding:5px 7px; font-size:9.5pt; border-radius:2px }
+#txt-search{ padding:5px 7px; font-size:9.5pt; border-radius:2px }
 .btn-search{ padding:4px 6px; font-size:9.5pt; border-radius:2px }

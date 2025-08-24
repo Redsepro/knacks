@@ -2,27 +2,62 @@
 * KNACK STYLE: Terminal
 */
 
+/* --- CUSTOM FONTS --- */
+@font-face {
+  font-family: 'FlexiVGA';
+  src: url('../fonts/FlexiIBMVGA.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 20px;
+  }
+  p.title {
+    line-height: 1em;
+    border-bottom: 1.5px dotted #0f0;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #div-logo {
+    background-color: #e8ebec;
+    border-radius: 2px;
+  }
+  #box-content {
+    padding: 20px 40px;
+  }
+  p.title {
+    line-height: 1.2em;
+    border-bottom: 2px solid #0f0;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #000;
   color: #0f0;
-  font-family: 'Courier New', monospace;
-  line-height: 1.4;
+  font-family: 'FlexiVGA', 'Consolas', 'Courier New', monospace;
+  font-size: 1.2em;
+  line-height: 1.2em;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   background-color: #000;
   padding: 20px 10px;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #000;
-  padding: 20px 40px;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
-  background-color: #0f0;
+div#bar-resizer {
+  background-color: #070;
   width: 5px;
   cursor: ew-resize;
   position: absolute;
@@ -33,64 +68,64 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-right: 5px;
 }
 
-#toc ul, #toc ul ul {
+#nav-toc ul, #nav-toc ul ul {
   list-style-type: none;
   padding-left: 10px;
 }
 
-#toc ul li {
-  font-size: 0.9em;
+#nav-toc ul li {
+  font-size: 1em;
   margin-bottom: 0.3em;
 }
 
-#toc a {
+#nav-toc a {
   color: #0f0;
   text-decoration: none;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   text-decoration: underline;
 }
 
 /* --- CONTENT STYLES --- */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Courier New', monospace;
-  color: #0f0;
+  font-family: 'FlexiVGA', 'Consolas', 'Courier New', monospace;
   font-weight: normal;
+  line-height: 1.2em;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
+  color: #0f0;
 }
 
 p.title {
-  font-family: 'Courier New', monospace;
-  font-size: 1.8em;
+  font-family: 'FlexiVGA', 'Consolas', 'Courier New', monospace;
+  font-size: 2em;
   font-weight: bold;
-  color: #0f0;
-  border-bottom: 2px solid #0f0;
   padding-bottom: 10px;
   margin-top: 0;
+  color: #0f0;
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 2em;
   border-bottom: 1px solid #0f0;
   padding-bottom: 0.2em;
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.75em;
 }
 
 p {
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
 }
 
 a {
-  color: #00f;
+  color: yellow;
   text-decoration: none;
 }
 
@@ -109,24 +144,25 @@ blockquote {
   margin: 1em 0;
 }
 
-.boxCode, code {
-  font-family: 'Courier New', monospace;
+.div-code, code {
+  font-family: 'FlexiVGA', 'Consolas', 'Courier New', monospace;
   background-color: #000;
   color: #0f0;
   padding: 0.2em 0.4em;
 }
 
-.boxCode {
+.div-code {
   border: 1px dotted #00aa00;
-  padding: 8px;
+  margin: 10px 0;
+  padding: 5px;
 }
 
-/* Terminal: featured, task-list and boxCode button */
-.boxCode > button {
+/* Terminal: featured, lst-task and div-code button */
+.div-code > button {
   position: absolute;
   right: 8px;
   top: 8px;
-  font-family: 'Courier New', monospace;
+  font-family: 'FlexiVGA', 'Consolas', 'Courier New', monospace;
   font-size: 0.85em;
   background: #0f0;
   color: #000;
@@ -135,7 +171,7 @@ blockquote {
   cursor: pointer;
 }
 
-.boxCode > button:hover {
+.div-code > button:hover {
   background: #0b0;
 }
 
@@ -143,7 +179,7 @@ pre {
   overflow: auto;
 }
 
-.featured {
+.div-featured {
   background: #001400;
   border: 1px solid #003200;
   padding: 10px;
@@ -154,15 +190,15 @@ pre {
   gap: 8px;
 }
 
-.feat-icon {
+.img-featured {
   color: #0f0;
 }
 
-.feat-text {
+.txt-featured {
   flex: 1;
 }
 
-.task-list {
+.lst-task {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -171,7 +207,7 @@ pre {
   gap: 6px;
 }
 
-.task-checkbox {
+.chk-task {
   width: 14px;
   height: 14px;
   border: 1.6px solid #0f0;
@@ -180,12 +216,12 @@ pre {
   cursor: pointer;
 }
 
-.task-checkbox.is-checked {
+.chk-task.is-checked {
   background: #0f0;
   border-color: #0f0;
 }
 
-.task-checkbox::after {
+.chk-task::after {
   content: '✓';
   color: #000;
   display: block;
@@ -194,14 +230,15 @@ pre {
   opacity: 0;
 }
 
-.task-checkbox.is-checked::after {
+.chk-task.is-checked::after {
   opacity: 1;
 }
 
 .btn-search {
-  background: #0f0;
+  background: #070;
   color: #000;
   border: none;
+  border-radius: 2px;
   padding: 4px 8px;
   cursor: pointer;
 }
@@ -210,7 +247,7 @@ pre {
   background: #0b0;
 }
 
-#global-search {
+#txt-search {
   width: 100%;
   padding: 7px 9px;
   font-size: 0.95rem;

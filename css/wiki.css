@@ -2,6 +2,31 @@
 * KNACK STYLE: Wiki
 */
 
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 20px;
+  }
+  p.title {
+    font-size: 1.5em;
+    line-height: 1.2em;
+    border-bottom: 1px solid #c8ccd1;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #box-content {
+    padding: 20px 40px;
+  }
+  p.title {
+    font-size: 1.8em;
+    line-height: 1.4em;
+    border-bottom: 2px solid #a2a9b1;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #eaecf0;
@@ -10,19 +35,18 @@ body {
   line-height: 1.5;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   background-color: #fff;
   padding: 20px 10px;
   border-right: 1px solid #a2a9b1;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #fff;
-  padding: 20px 40px;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
+div#bar-resizer {
   background-color: #a2a9b1;
   width: 5px;
   cursor: ew-resize;
@@ -34,26 +58,26 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-right: 5px;
 }
 
-#toc ul, #toc ul ul {
+#nav-toc ul, #nav-toc ul ul {
   list-style-type: none;
   padding-left: 10px;
 }
 
-#toc ul li {
+#nav-toc ul li {
   font-size: 0.9em;
   margin-bottom: 0.3em;
 }
 
-#toc a {
+#nav-toc a {
   color: #3366cc;
   text-decoration: none;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   text-decoration: underline;
 }
 
@@ -68,10 +92,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p.title {
   font-family: sans-serif;
-  font-size: 1.8em;
   font-weight: bold;
   color: #202122;
-  border-bottom: 2px solid #a2a9b1;
   padding-bottom: 10px;
   margin-top: 0;
 }
@@ -110,19 +132,19 @@ blockquote {
   margin: 1em 0;
 }
 
-.boxCode, code {
+.div-code, code {
   font-family: monospace;
   background-color: #f8f9fa;
   padding: 0.2em 0.4em;
 }
 
-.boxCode {
+.div-code {
   border: 1px solid #eaecf0;
   padding: 1em;
 }
 
-/* Wiki: featured, task-list and boxCode button */
-.boxCode > button {
+/* Wiki: featured, lst-task and div-code button */
+.div-code > button {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -136,7 +158,7 @@ blockquote {
   cursor: pointer;
 }
 
-.boxCode > button:hover {
+.div-code > button:hover {
   opacity: 0.95;
 }
 
@@ -144,7 +166,7 @@ pre {
   overflow: auto;
 }
 
-.featured {
+.div-featured {
   background: #f6fbff;
   border: 1px solid #dfe9f6;
   padding: 12px;
@@ -154,15 +176,15 @@ pre {
   gap: 10px;
 }
 
-.feat-icon {
+.img-featured {
   color: #3366cc;
 }
 
-.feat-text {
+.txt-featured {
   flex: 1;
 }
 
-.task-list {
+.lst-task {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -171,7 +193,7 @@ pre {
   gap: 6px;
 }
 
-.task-checkbox {
+.chk-task {
   width: 14px;
   height: 14px;
   border: 1.6px solid #9aa3b3;
@@ -180,12 +202,12 @@ pre {
   cursor: pointer;
 }
 
-.task-checkbox.is-checked {
+.chk-task.is-checked {
   background: #3366cc;
   border-color: #3366cc;
 }
 
-.task-checkbox::after {
+.chk-task::after {
   content: '✓';
   color: #fff;
   display: block;
@@ -194,7 +216,7 @@ pre {
   opacity: 0;
 }
 
-.task-checkbox.is-checked::after {
+.chk-task.is-checked::after {
   opacity: 1;
 }
 
@@ -211,4 +233,4 @@ pre {
   opacity: 0.95;
 }
 
-#global-search { width: 100%; padding: 8px 10px; font-size: 0.95rem; border: 1px solid #cfcfcf; border-radius: 6px; background: #fff; }
+#txt-search { width: 100%; padding: 8px 10px; font-size: 0.95rem; border: 1px solid #cfcfcf; border-radius: 6px; background: #fff; }

@@ -2,6 +2,31 @@
 * KNACK STYLE: Ubuntu
 */
 
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 20px;
+  }
+  p.title {
+    font-size: 2em;
+    line-height: 1.2em;
+    border-bottom: 1px solid #e67e22;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #box-content {
+    padding: 20px 40px;
+  }
+  p.title {
+    font-size: 2.5em;
+    line-height: 1.4em;
+    border-bottom: 2px solid #dd4814;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #fafafa;
@@ -10,19 +35,18 @@ body {
   line-height: 1.6;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   background-color: #f2f0f0;
   padding: 20px 10px;
   border-right: 1px solid #ddd;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #fafafa;
-  padding: 20px 40px;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
+div#bar-resizer {
   background-color: #dfdbd8;
   width: 5px;
   cursor: ew-resize;
@@ -34,26 +58,26 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-right: 5px;
 }
 
-#toc ul, #toc ul ul {
+#nav-toc ul, #nav-toc ul ul {
   list-style-type: none;
   padding-left: 10px;
 }
 
-#toc ul li {
+#nav-toc ul li {
   font-size: 0.9em;
   margin-bottom: 0.3em;
 }
 
-#toc a {
+#nav-toc a {
   color: #3e73a3;
   text-decoration: none;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   text-decoration: underline;
 }
 
@@ -68,10 +92,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p.title {
   font-family: 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 2.5em;
   font-weight: bold;
-  color: #333;
-  border-bottom: 2px solid #dd4814;
+  color: #dd4814;
   padding-bottom: 10px;
   margin-top: 0;
 }
@@ -111,7 +133,7 @@ blockquote {
   margin: 1.2em 0;
 }
 
-.boxCode, code {
+.div-code, code {
   font-family: 'Ubuntu Mono', 'Courier New', monospace;
   background-color: #f0f0f0;
   color: #2c2c2c;
@@ -119,29 +141,29 @@ blockquote {
   padding: 0.2em 0.4em;
 }
 
-.boxCode {
+.div-code {
   padding: 1em;
 }
 
-/* Ubuntu: featured, task-list and boxCode button */
-.boxCode > button{ position:absolute; right:12px; top:12px; font-family:'Ubuntu',sans-serif; font-size:0.9em; background:#dd4814; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer }
-.boxCode > button:hover{ filter:brightness(0.94) }
+/* Ubuntu: featured, lst-task and div-code button */
+.div-code > button{ position:absolute; right:12px; top:12px; font-family:'Ubuntu',sans-serif; font-size:0.9em; background:#dd4814; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer }
+.div-code > button:hover{ filter:brightness(0.94) }
 pre{ overflow:auto }
-.featured{ background:#fff7f2; border-left:4px solid #dd4814; padding:14px; margin:12px 0; border-radius:6px; display:flex; gap:10px }
-.feat-icon{ color:#dd4814 }
-.feat-text{ flex:1 }
+.div-featured{ background:#fff7f2; border-left:4px solid #dd4814; padding:14px; margin:12px 0; border-radius:6px; display:flex; gap:10px }
+.img-featured{ color:#dd4814 }
+.txt-featured{ flex:1 }
 
-.task-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px }
-.task-checkbox{ width:16px; height:16px; border-radius:4px; border:1.6px solid #c8c8c8; background:#fff; cursor:pointer }
-.task-checkbox.is-checked{ background:#dd4814; border-color:#dd4814 }
-.task-checkbox::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:16px; opacity:0 }
-.task-checkbox.is-checked::after{ opacity:1 }
+.lst-task{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px }
+.chk-task{ width:16px; height:16px; border-radius:4px; border:1.6px solid #c8c8c8; background:#fff; cursor:pointer }
+.chk-task.is-checked{ background:#dd4814; border-color:#dd4814 }
+.chk-task::after{ content:'✓'; color:#fff; display:block; text-align:center; line-height:16px; opacity:0 }
+.chk-task.is-checked::after{ opacity:1 }
 
 .btn-search{ background:#dd4814; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer }
 .btn-search:hover{ filter:brightness(0.94) }
 
 /* Search tweaks: Ubuntu - orange accent and slightly larger controls */
-#global-search{ width:100%; padding:9px 12px; font-size:0.98rem; border:1px solid #dd4814; border-radius:6px; background:#fff }
+#txt-search{ width:100%; padding:9px 12px; font-size:0.98rem; border:1px solid #dd4814; border-radius:6px; background:#fff }
 .btn-search { padding:8px 12px; font-size:0.98rem; }
 
-#global-search{ width:100%; padding:8px 10px; font-size:0.95rem; border:1px solid #dd4814; border-radius:6px; background:#fff }
+#txt-search{ width:100%; padding:8px 10px; font-size:0.95rem; border:1px solid #dd4814; border-radius:6px; background:#fff }

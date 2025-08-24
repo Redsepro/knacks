@@ -2,6 +2,31 @@
 * KNACK STYLE: Material Design
 */
 
+/* --- RESPONSIVE DESIGN --- */
+/* 1 column layout (mobile) */
+@media (max-width: 700px) {
+  #box-content {
+    padding: 20px;
+  }
+  p.title {
+    font-size: 2.5rem;
+    line-height: 1.2em;
+    border-bottom: 1px solid #9575cd;
+  }
+}
+
+/* 2 column layout (desktop) */
+@media (min-width: 700px) {
+  #box-content {
+    padding: 20px 40px;
+  }
+  p.title {
+    font-size: 3rem;
+    line-height: 1.4em;
+    border-bottom: 2px solid #673ab7;
+  }
+}
+
 /* --- LAYOUT AND BACKGROUND COLORS --- */
 body {
   background-color: #f5f5f5;
@@ -10,18 +35,17 @@ body {
   line-height: 1.6;
 }
 
-aside#toc-panel {
+aside#box-lateral {
   background-color: #fff;
   padding: 20px 10px;
 }
 
-div#content-panel {
+div#box-content {
   background-color: #f5f5f5;
-  padding: 20px 40px;
 }
 
 /* --- RESIZER STYLES --- */
-div#resizer {
+div#bar-resizer {
   background-color: #bdbdbd;
   width: 5px;
   cursor: ew-resize;
@@ -33,26 +57,26 @@ div#resizer {
 }
 
 /* --- TOC STYLES --- */
-#toc {
+#nav-toc {
   margin-right: 5px;
 }
 
-#toc ul, #toc ul ul {
+#nav-toc ul, #nav-toc ul ul {
   list-style-type: none;
   padding-left: 10px;
 }
 
-#toc ul li {
+#nav-toc ul li {
   font-size: 0.9em;
   margin-bottom: 0.3em;
 }
 
-#toc a {
+#nav-toc a {
   color: #757575;
   text-decoration: none;
 }
 
-#toc a:hover {
+#nav-toc a:hover {
   text-decoration: underline;
 }
 
@@ -67,10 +91,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p.title {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-size: 3rem;
   font-weight: bold;
   color: #673ab7;
-  border-bottom: 2px solid #673ab7;
   padding-bottom: 10px;
   margin-top: 0;
 }
@@ -117,7 +139,7 @@ blockquote {
   border-radius: 4px;
 }
 
-.boxCode, code {
+.div-code, code {
   font-family: 'Roboto Mono', 'Consolas', monospace;
   background-color: #e0e0e0;
   color: #212121;
@@ -125,12 +147,12 @@ blockquote {
   padding: 0.2em 0.4em;
 }
 
-.boxCode {
+.div-code {
   padding: 1.5em;
 }
 
-/* Material: featured, task-list and boxCode button */
-.boxCode > button {
+/* Material: featured, lst-task and div-code button */
+.div-code > button {
   position: absolute;
   right: 12px;
   top: 12px;
@@ -144,7 +166,7 @@ blockquote {
   cursor: pointer;
 }
 
-.boxCode > button:hover {
+.div-code > button:hover {
   filter: brightness(0.95);
 }
 
@@ -152,7 +174,7 @@ pre {
   overflow: auto;
 }
 
-.featured {
+.div-featured {
   background: #fff3e0;
   border-left: 4px solid #ffb74d;
   padding: 14px;
@@ -162,15 +184,15 @@ pre {
   gap: 12px;
 }
 
-.feat-icon {
+.img-featured {
   color: #ff9800;
 }
 
-.feat-text {
+.txt-featured {
   flex: 1;
 }
 
-.task-list {
+.lst-task {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -179,7 +201,7 @@ pre {
   gap: 8px;
 }
 
-.task-checkbox {
+.chk-task {
   width: 16px;
   height: 16px;
   border-radius: 3px;
@@ -188,12 +210,12 @@ pre {
   cursor: pointer;
 }
 
-.task-checkbox.is-checked {
+.chk-task.is-checked {
   background: #673ab7;
   border-color: #673ab7;
 }
 
-.task-checkbox::after {
+.chk-task::after {
   content: '✓';
   color: #fff;
   display: block;
@@ -202,7 +224,7 @@ pre {
   opacity: 0;
 }
 
-.task-checkbox.is-checked::after {
+.chk-task.is-checked::after {
   opacity: 1;
 }
 

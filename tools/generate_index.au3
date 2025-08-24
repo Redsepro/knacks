@@ -1,4 +1,15 @@
-﻿; AutoIt script to generate knacks-index.json
+﻿#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Outfile_x64=KnackIndexBuilder64.exe
+#AutoIt3Wrapper_Compression=4
+#AutoIt3Wrapper_UseUpx=y
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.1
+#AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
+#AutoIt3Wrapper_Res_Language=1033
+#AutoIt3Wrapper_Run_Tidy=y
+#AutoIt3Wrapper_Run_Au3Stripper=y
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+
+; AutoIt script to generate knacks-index.json
 ; - Use knacks-list.html (option.value / option text)
 ; - Reads each file in knacks\ and extracts the text (without HTML tags)
 ; - Builds knacks-index.json in project root
@@ -60,7 +71,7 @@ Func main()
 
   ; Convert flat array to 2D array
   $aKnacks = _to2DArray($aContent)
-  
+
   ; Add simplify html content to array
   For $i = 1 To $aKnacks[0][0]
     $sKnackFile = $sKnacksDir & $aKnacks[$i][0]
@@ -88,10 +99,10 @@ Func main()
       Case Else
         $sText = StringLeft($aKnacks[$i][2], $MAX_CHARS) ; Use Specific text length
     EndSwitch
-    $sObj =  '  {' & @CRLF
+    $sObj = '  {' & @CRLF
     $sObj &= '    "file": "' & _escapeJSON($aKnacks[$i][0]) & '",' & @CRLF
     $sObj &= '    "title": "' & _escapeJSON($aKnacks[$i][1]) & '",' & @CRLF
-    ;~ $sObj &= '    "text": "' & $sText & '"' & @CRLF
+;~ $sObj &= '    "text": "' & $sText & '"' & @CRLF
     $sObj &= '    "text": "' & _escapeJSON($sText) & '"' & @CRLF
     $sObj &= '  },' & @CRLF
     $sJson &= $sObj
@@ -170,7 +181,7 @@ Func _loadFile($pFile, $pAsArray = False)
   ; Check arguments
   $pFile = StringStripWS(StringReplace($pFile, '/', '\'), 3)
   If Not IsString($pFile) Or StringLen($pFile) = 0 Then Return SetError(1, 1, '')
-  If Not FileExists($pFile) Then return SetError(1, 2, '')
+  If Not FileExists($pFile) Then Return SetError(1, 2, '')
   If $pAsArray == Default Or Not IsBool($pAsArray) Then $pAsArray = False
 
   ; Open file for reading
@@ -198,12 +209,12 @@ EndFunc ; ======================================================================
 ; ; @param  String          Key name in section.
 ; ; @param  [String]        Default value to return if section or key is not found.
 ; ; @return String          Value found or default value.
-Func _loadINI($pSection, $pKey, $pDefault = '') 
+Func _loadINI($pSection, $pKey, $pDefault = '')
   Local $aLines
   Local $iPos
   Local $sIniFile
   Local $sKey
-  
+
   ; Check arguments
   If Not IsString($pSection) Or StringLen($pSection) == 0 Then Return SetError(1, 1, $pDefault)
   If Not IsString($pKey) Or StringLen($pKey) == 0 Then Return SetError(1, 2, $pDefault)
@@ -221,7 +232,7 @@ Func _loadINI($pSection, $pKey, $pDefault = '')
       For $i = $i + 1 To $aLines[0]
         If StringLeft($aLines[$i], 1) == '[' Then Return SetError(3, 1, $pDefault) ; New section header
         If _invalidLine($aLines[$i]) Then ContinueLoop ; Skip empty lines & comments
-              
+
         $iPos = StringInStr($aLines[$i], '=', 2)
         If $iPos == 0 Then ContinueLoop
         $sKey = StringStripWS(StringLeft($aLines[$i], $iPos - 1), 3)
@@ -298,22 +309,22 @@ EndFunc ; ======================================================================
 ; ; @param  String[]        Array to convert.
 ; ; @return String[][]      One-based 2D array.
 Func _to2DArray($pArray)
-	Local $aReturn = [[0, '', '']]
-	Local $iCount
-	Local $iIndex = 1
+  Local $aReturn = [[0, '', '']]
+  Local $iCount
+  Local $iIndex = 1
 
-	If Not IsArray($pArray) Then Return SetError(1, 0, $aReturn)
-	$iCount = UBound($pArray)
+  If Not IsArray($pArray) Then Return SetError(1, 0, $aReturn)
+  $iCount = UBound($pArray)
 
-	Dim $aReturn[$iCount / 2 + 1][3]
-	For $i = 0 To $iCount - 1
-		If Mod($i, 2) Then
-			$aReturn[$iIndex][1] = $pArray[$i]
-			$iIndex += 1
-		Else
-			$aReturn[$iIndex][0] = StringStripWS($pArray[$i], 3)
-		EndIf
-	Next
-	$aReturn[0][0] = $iIndex - 1
-	Return $aReturn
+  Dim $aReturn[$iCount / 2 + 1][3]
+  For $i = 0 To $iCount - 1
+    If Mod($i, 2) Then
+      $aReturn[$iIndex][1] = $pArray[$i]
+      $iIndex += 1
+    Else
+      $aReturn[$iIndex][0] = StringStripWS($pArray[$i], 3)
+    EndIf
+  Next
+  $aReturn[0][0] = $iIndex - 1
+  Return $aReturn
 EndFunc ; ====================================================================== _to2DArray[][] ==>

@@ -4,115 +4,115 @@
 
 <p>Es necesario tener instalado <i>WSL</i> y una distribución de <i>Linux</i> (<i>Ubuntu</i>, en este caso) y es fundamental configurar correctamente las dependencias para asegurar un funcionamiento estable y eficiente del <b>CLI</b>, evitando los inconvenientes presentados por otros métodos de instalación. <i>Gemini CLI</i> requiere <i>Node.js</i> y <i>npm</i>, por lo que se instalará la versión <b>LTS</b> (<b>Long Term Support</b>) más reciente para asegurar la compatibilidad.</p>
 
-<div class='featured'>
-<span class='feat-icon'>ℹ️</span>
-<span class='feat-text'><b>NOTA:</b> Esta guía usará el método de autenticación <b>OAuth</b> para <i>Gemini CLI</i> porque ofrece un nivel gratuito de hasta <b>1,000 solicitudes de modelo por día</b> (60 solicitudes por minuto), significativamente más amplio que el límite de 100 solicitudes por día usando claves API de <i>Gemini 2.5 Pro</i>.
+<div class='div-featured'>
+<span class='img-featured'>ℹ️</span>
+<span class='txt-featured'><b>NOTA:</b> Esta guía usará el método de autenticación <b>OAuth</b> para <i>Gemini CLI</i> porque ofrece un nivel gratuito de hasta <b>1,000 solicitudes de modelo por día</b> (60 solicitudes por minuto), significativamente más amplio que el límite de 100 solicitudes por día usando claves API de <i>Gemini 2.5 Pro</i>.
 </span></div>
 
 <h1>👨🏽‍🏫 Instrucciones</h1>
 
 <h2>Verificar la instalación de <i>WSL</i> y <i>Ubuntu</i>.</h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Abrir en <i>Windows</i> el símbolo del sistema (<i>CMD</i>), <i>PowerShell</i> directamente en el escritorio o por medio de un software de terminal (por ej. <i>Tabby</i>).</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Abrir en <i>Windows</i> el símbolo del sistema (<i>CMD</i>), <i>PowerShell</i> directamente en el escritorio o por medio de un software de terminal (por ej. <i>Tabby</i>).</span></li>
 
-  <li><label class='task-checkbox'></label><span>Ingresar el siguiente comando.</span></li>
+  <li><label class='chk-task'></label><span>Ingresar el siguiente comando.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>wsl -l -v
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>wsl -l -v
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar que <code>Ubuntu</code> aparece en la lista con el estado <code>Stopped</code> o <code>Running</code> y <code>VERSION 2</code>. Si no se tiene <i>Ubuntu</i> o <i>WSL</i>, será necesario instalarlos primero.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar que <code>Ubuntu</code> aparece en la lista con el estado <code>Stopped</code> o <code>Running</code> y <code>VERSION 2</code>. Si no se tiene <i>Ubuntu</i> o <i>WSL</i>, será necesario instalarlos primero.</span></li>
 
 </ul>
 
 <h2>Iniciar la terminal de <i>Ubuntu</i> en <i>WSL</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Escribir en la terminal <code>wsl</code> o buscar <code>Ubuntu</code> en el menú de inicio de <i>Windows</i> y abrir la aplicación para iniciar la distribución de <i>Ubuntu</i> que presentará un prompt de <b>shell</b> (ej. <code>tu_usuario@tu_equipo:~$</code> o <code>tu_usuario@tu_equipo:/mnt/c$</code>).</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Escribir en la terminal <code>wsl</code> o buscar <code>Ubuntu</code> en el menú de inicio de <i>Windows</i> y abrir la aplicación para iniciar la distribución de <i>Ubuntu</i> que presentará un prompt de <b>shell</b> (ej. <code>tu_usuario@tu_equipo:~$</code> o <code>tu_usuario@tu_equipo:/mnt/c$</code>).</span></li>
 
 </ul>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes, introduciendo la contraseña de usuario si se solicita. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes, introduciendo la contraseña de usuario si se solicita. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt update && sudo apt upgrade -y
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt update && sudo apt upgrade -y
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que <i>WSL</i> se reinicie por completo y conectarse de nuevo.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que <i>WSL</i> se reinicie por completo y conectarse de nuevo.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo reboot
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo reboot
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/qMS6yqZm/image.png' alt='image'>
 <h2>Instalar <i>Node.js</i> y <i>npm</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Eliminar cualquier versión anterior de <i>Node.js</i> y <i>npm</i>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Eliminar cualquier versión anterior de <i>Node.js</i> y <i>npm</i>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt purge nodejs npm -y
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt purge nodejs npm -y
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/jkbwgHX8/image-1.png' alt='image-1'>
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Añadir el repositorio de <i>NodeSource</i> para <i>Node.js v20 LTS</i>, ejecutando el script oficial de <i>NodeSource</i> para configurar el repositorio. Este script añade la clave <b>GPG</b> y el repositorio automáticamente. Esperar a que el script finalice y confirme con <code>Repository configured successfully</code>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Añadir el repositorio de <i>NodeSource</i> para <i>Node.js v20 LTS</i>, ejecutando el script oficial de <i>NodeSource</i> para configurar el repositorio. Este script añade la clave <b>GPG</b> y el repositorio automáticamente. Esperar a que el script finalice y confirme con <code>Repository configured successfully</code>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/qYMLXKPM/image-2.png' alt='image-2'>
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Instalar <i>Node.js v20 LTS</i> y <i>npm</i>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Instalar <i>Node.js v20 LTS</i> y <i>npm</i>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt-get install nodejs -y
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt-get install nodejs -y
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/VWdD5fcN/image-3.png' alt='image-3'>
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar la versión de <i>Node.js</i>. Se debe ver <code>v20.x.x</code>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar la versión de <i>Node.js</i>. Se debe ver <code>v20.x.x</code>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>node -v
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>node -v
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar la versión de <i>npm</i>. Se debe ver <code>10.x.x</code> o superior.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar la versión de <i>npm</i>. Se debe ver <code>10.x.x</code> o superior.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>npm -v
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>npm -v
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/pvQ40sRJ/image-4.png' alt='image-4'>
 <h2>Instalar <i>Gemini CLI</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>En la terminal de <i>Ubuntu</i>, ejecutar el siguiente comando y esperar que la instalación finalice (debe mostrar <code>added X packages</code>).</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>En la terminal de <i>Ubuntu</i>, ejecutar el siguiente comando y esperar que la instalación finalice (debe mostrar <code>added X packages</code>).</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo npm install -g @google/gemini-cli
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo npm install -g @google/gemini-cli
 </code></pre></div>
 
 <h2>Autentificar <i>Gemini CLI</i> con OAuth</h2>
 
-<div class='featured'>
-<span class='feat-icon'>⚠️</span>
-<span class='feat-text'><b>NOTA.</b> Durante el proceso de autenticación, si se utiliza un antivirus (por ejemplo, <i>Avast</i>), es probable que este bloquee la interacción del <b>CLI</b> con <i>PowerShell</i> necesaria para abrir el navegador. Algunos antivirus pueden requerir agregar una excepción a los ejecutables o incluso una <b>desactivación temporal del escudo de comportamiento</b> para permitir que este proceso se complete.
+<div class='div-featured'>
+<span class='img-featured'>⚠️</span>
+<span class='txt-featured'><b>NOTA.</b> Durante el proceso de autenticación, si se utiliza un antivirus (por ejemplo, <i>Avast</i>), es probable que este bloquee la interacción del <b>CLI</b> con <i>PowerShell</i> necesaria para abrir el navegador. Algunos antivirus pueden requerir agregar una excepción a los ejecutables o incluso una <b>desactivación temporal del escudo de comportamiento</b> para permitir que este proceso se complete.
 <ul>
   <li>Intentar en primera instancia la autentificación de <i>Gemini CLI</i> con las defensas activas.</li>
 
@@ -124,33 +124,33 @@
 
 </ul>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Iniciar el proceso de autenticación.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Iniciar el proceso de autenticación.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>gemini
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>gemini
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Cuando se presente la opción de método de autenticación, seleccionar <code>Login with Google</code> (generalmente la primera opción).</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Cuando se presente la opción de método de autenticación, seleccionar <code>Login with Google</code> (generalmente la primera opción).</span></li>
 
-  <li><label class='task-checkbox'></label><span>El navegador web predeterminado de <i>Windows</i> debe abrirse automáticamente, redirigiendo a una página de inicio de sesión de <i>Google</i>.</span></li>
+  <li><label class='chk-task'></label><span>El navegador web predeterminado de <i>Windows</i> debe abrirse automáticamente, redirigiendo a una página de inicio de sesión de <i>Google</i>.</span></li>
 
-  <li><label class='task-checkbox'></label><span>Iniciar sesión con la cuenta personal de <i>Google</i>, otorgar los permisos solicitados por <code>Gemini Code Assist</code> y confirmar la solicitud para que aparezca el mensaje <code>Gemini Code Assist ahora tiene autorización para acceder a tu cuenta</code>.</span></li>
+  <li><label class='chk-task'></label><span>Iniciar sesión con la cuenta personal de <i>Google</i>, otorgar los permisos solicitados por <code>Gemini Code Assist</code> y confirmar la solicitud para que aparezca el mensaje <code>Gemini Code Assist ahora tiene autorización para acceder a tu cuenta</code>.</span></li>
 
-  <li><label class='task-checkbox'></label><span>Reactivar el antivirus si fue necesario desactivarlo.</span></li>
+  <li><label class='chk-task'></label><span>Reactivar el antivirus si fue necesario desactivarlo.</span></li>
 
 </ul>
 
 <h2>Verificar la instalación</h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar la versión del <i>Gemini CLI</i>. Se debe ver la versión del <b>CLI</b> (ej. <code>0.1.9</code>), confirmando que la instalación y autenticación fueron exitosas.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar la versión del <i>Gemini CLI</i>. Se debe ver la versión del <b>CLI</b> (ej. <code>0.1.9</code>), confirmando que la instalación y autenticación fueron exitosas.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>gemini --version
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>gemini --version
 </code></pre></div>
 
 <h1>🎞️ Videos</h1>

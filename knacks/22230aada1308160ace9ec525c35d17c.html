@@ -6,154 +6,154 @@
 
 <h2>Actualizar el servidor</h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Conectarse de manera remota al servidor mediante un terminal. Ver: <a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/Windows-Conectarse-a-instancias-Linux-con-PuTTY-21a30aada1308040a698e53a70e62c41?pvs=21'>Windows: <b>Conectarse a instancias Linux con PuTTY</b></a>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Conectarse de manera remota al servidor mediante un terminal. Ver: <a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/Windows-Conectarse-a-instancias-Linux-con-PuTTY-21a30aada1308040a698e53a70e62c41?pvs=21'>Windows: <b>Conectarse a instancias Linux con PuTTY</b></a>.</span></li>
 
 </ul>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Actualizar el índice de paquetes disponibles desde los repositorios de <i>Ubuntu</i> e instalar las actualizaciones pendientes. La opción <code>-y</code> acepta automáticamente todas las preguntas de confirmación, lo que es útil para actualizaciones no interactivas.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt update && sudo apt upgrade -y
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt update && sudo apt upgrade -y
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que el servidor se reinicie por completo y pueda conectarse de nuevo.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Si el sistema necesita un reinicio, introducir el siguiente comando y esperar un minuto o dos hasta que el servidor se reinicie por completo y pueda conectarse de nuevo.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo reboot
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo reboot
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/jPdHj8rS/image.png' alt='image'>
 <h2><b>Instalar los paquetes requeridos por</b> <i>Docker</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Instalar los paquetes necesarios para permitir que <code>apt</code> use repositorios a través de <b>HTTPS</b>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Instalar los paquetes necesarios para permitir que <code>apt</code> use repositorios a través de <b>HTTPS</b>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Wp5sqRyK/image-1.png' alt='image 1'>
 <h2><b>Añadir la clave GPG oficial de</b> <i>Docker</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Para asegurar la autenticidad de los paquetes de <i>Docker</i>, descargar y añadir la <b>clave GPG</b> oficial de <i>Docker</i>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Para asegurar la autenticidad de los paquetes de <i>Docker</i>, descargar y añadir la <b>clave GPG</b> oficial de <i>Docker</i>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Establecer los permisos adecuados para el archivo de la clave.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Establecer los permisos adecuados para el archivo de la clave.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo chmod a+r /etc/apt/keyrings/docker.gpg
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo chmod a+r /etc/apt/keyrings/docker.gpg
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/60zC7ZQM/image-2.png' alt='image 2'>
 <h2><b>Añadir el repositorio de</b> <i>Docker APT</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Añadir el repositorio oficial de <i>Docker</i> a la lista de fuentes <code>apt</code> para obtener sus paquetes del repositorio oficial.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Añadir el repositorio oficial de <i>Docker</i> a la lista de fuentes <code>apt</code> para obtener sus paquetes del repositorio oficial.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Actualizar la lista de paquetes de <code>apt</code> después de añadir el nuevo repositorio.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Actualizar la lista de paquetes de <code>apt</code> después de añadir el nuevo repositorio.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt update
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt update
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/v4jKjkB9/image-3.png' alt='image 3'>
 <h2><b>Instalar</b> <i>Docker Engine</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Instalar los componentes principales de <i>Docker Engine</i>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Instalar los componentes principales de <i>Docker Engine</i>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/Nn6rqPgz/image-4.png' alt='image 4'>
 <h2><b>Verificar la instalación de</b> <i>Docker</i></h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar el estado del servicio <i>Docker</i>. Se debe ver un estado <b>"</b><code>Active: active (running) since ...</code><b>"</b>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar el estado del servicio <i>Docker</i>. Se debe ver un estado <b>"</b><code>Active: active (running) since ...</code><b>"</b>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo systemctl status docker --no-pager
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo systemctl status docker --no-pager
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/LDyJmLZ4/image-5.png' alt='image 5'>
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Ejecutar la imagen de prueba "<code>hello-world</code>" para confirmar que <i>Docker</i> funciona. Si la instalación fue exitosa, aparecerá en última instancia el mensaje: <code>Hello from Docker! This message shows that your installation appears to be working correctly.</code></span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Ejecutar la imagen de prueba "<code>hello-world</code>" para confirmar que <i>Docker</i> funciona. Si la instalación fue exitosa, aparecerá en última instancia el mensaje: <code>Hello from Docker! This message shows that your installation appears to be working correctly.</code></span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo docker run --rm hello-world
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo docker run --rm hello-world
 </code></pre></div>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar la versión de <i>Docker Compose</i> (debe ser la versión v2). Debe devolver  <code>Docker Compose version v2.x.x</code>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar la versión de <i>Docker Compose</i> (debe ser la versión v2). Debe devolver  <code>Docker Compose version v2.x.x</code>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>docker compose version
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>docker compose version
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/twsDhKgN/image-6.png' alt='image 6'>
-<div class='featured'>
-<span class='feat-icon'>⚠️</span>
-<span class='feat-text'>Si desea eliminar <b>todas</b> las imágenes de <code>hello-world</code> almacenadas en su servidor, ejecutar los siguientes comandos.
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo docker rm $(docker ps -a -q --filter ancestor=hello-world --filter status=exited) && sudo docker rmi hello-world
+<div class='div-featured'>
+<span class='img-featured'>⚠️</span>
+<span class='txt-featured'>Si desea eliminar <b>todas</b> las imágenes de <code>hello-world</code> almacenadas en su servidor, ejecutar los siguientes comandos.
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo docker rm $(docker ps -a -q --filter ancestor=hello-world --filter status=exited) && sudo docker rmi hello-world
 </code></pre></div>
 
 </span></div>
 
 <h2>Gestionar <i>Docker</i> como usuario No-Root (Opcional pero recomendado)</h2>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Por defecto, <i>Docker</i> requiere <code>sudo</code> para ejecutarse. Añadir su usuario al grupo <code>docker</code> le permitirá ejecutar comandos <i>Docker</i> sin <code>sudo</code>.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Por defecto, <i>Docker</i> requiere <code>sudo</code> para ejecutarse. Añadir su usuario al grupo <code>docker</code> le permitirá ejecutar comandos <i>Docker</i> sin <code>sudo</code>.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>sudo usermod -aG docker $USER
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>sudo usermod -aG docker $USER
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/jkrXZJgb/image-7.png' alt='image 7'>
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Reiniciar el servidor o la sesión SSH para que los nuevos permisos de grupo se apliquen a su sesión.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Reiniciar el servidor o la sesión SSH para que los nuevos permisos de grupo se apliquen a su sesión.</span></li>
 
 </ul>
 
-<ul class='task-list'>
-  <li><label class='task-checkbox'></label><span>Verificar si el usuario ha sido añadido al grupo revisando que <code>docker</code> aparezca entre los grupos activos para el usuario activo.</span></li>
+<ul class='lst-task'>
+  <li><label class='chk-task'></label><span>Verificar si el usuario ha sido añadido al grupo revisando que <code>docker</code> aparezca entre los grupos activos para el usuario activo.</span></li>
 
 </ul>
 
-<div class='boxCode'><button class='btnCopy'>Copiar</button><pre><code class='txtCode'>groups
+<div class='div-code'><button class='btn-code'>Copiar</button><pre><code class='txt-code'>groups
 </code></pre></div>
 
 <img target='_blank' rel='noopener noreferrer' src='https://i.ibb.co/3yXwXQJw/image-8.png' alt='image 8'>
 <h1>➡️ Ver también</h1>
 
-<div class='featured'>
-<span class='feat-icon'>ℹ️</span>
-<span class='feat-text'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/22230aada13080f3b8ddd2a0ee9dac4c?pvs=21'>Desplegar aplicaciones en un servidor Ubuntu</a>
+<div class='div-featured'>
+<span class='img-featured'>ℹ️</span>
+<span class='txt-featured'><a target='_blank' rel='noopener noreferrer' href='https://www.notion.so/22230aada13080f3b8ddd2a0ee9dac4c?pvs=21'>Desplegar aplicaciones en un servidor Ubuntu</a>
 </span></div>
 
 <h1>🎞️ Videos</h1>
