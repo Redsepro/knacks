@@ -12,11 +12,11 @@
 
 /* 2 column layout (desktop) */
 @media (min-width: 700px) {
-  #div-logo {
+  #div-img-logo {
     background-color: #80b4e8;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 0 0 5px;
-    padding-left: 20px
+    /* padding-left: 20px; */
   }
   #box-content {
     padding: 20px 40px;

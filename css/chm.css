@@ -2,6 +2,11 @@
 * KNACK STYLE: CHM
 */
 
+:root {
+  --image-logo: url('../img/logo_knacks_chm.webp');
+  --image-icon: url('../img/icon_knacks_chm.webp');
+}
+
 /* --- RESPONSIVE DESIGN --- */
 /* 1 column layout (mobile) */
 @media (max-width: 700px) {
